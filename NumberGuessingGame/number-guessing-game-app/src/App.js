@@ -4,9 +4,9 @@ function App() {
   return (
     <main>
       <h1>Number Guessing Game</h1>
+      <p>Guess an integer number from 1 to 100</p>
       <form>
         <fieldset>
-          <label htmlFor="guess">Guess an integer number from 1 to 100</label>
           <input type="text" id="guess"/>
           <input type="submit" value="Guess"/>
         </fieldset>

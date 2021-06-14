@@ -56,7 +56,7 @@ fieldset {
   align-items: center;
 }
 
-label {
+p {
   margin: 10px 0;
 }
 
@@ -72,7 +72,7 @@ input[type="text"] {
 }
 
 input[type="submit"] {
-  width: 100%;
+  width: 400px;
   padding: 15px 0;
   font: normal 20px Helvetica, Arial, sans-serif;
   color: #ffffff;
