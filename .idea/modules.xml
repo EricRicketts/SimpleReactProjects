@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/SimpleReactProjects.iml" filepath="$PROJECT_DIR$/.idea/SimpleReactProjects.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../LaunchSchool/HTMLCSSJavascript/DOMAndAsynchronousProgrammingWithJavascript/EventDrivenAndAsynchronousProgramming/assignment_guessing_game/.idea/assignment_guessing_game.iml" filepath="$PROJECT_DIR$/../LaunchSchool/HTMLCSSJavascript/DOMAndAsynchronousProgrammingWithJavascript/EventDrivenAndAsynchronousProgramming/assignment_guessing_game/.idea/assignment_guessing_game.iml" />
     </modules>
   </component>
 </project>

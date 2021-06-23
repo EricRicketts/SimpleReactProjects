@@ -15,11 +15,14 @@ class NumberGuessingForm extends React.Component {
   }
 
   render() {
+    const inputClassName = this.props.OnGameOver ? "inactive" : "active";
     return (
       <form onSubmit={this.handleSubmit}>
         <fieldset>
           <input type="text" id="guess" name="guess" maxLength={3} ref={this.input} />
-          <input type="submit" value="Guess" />
+          <input type="submit" className={inputClassName}
+                 value="Guess" disabled={this.props.OnGameOver}
+          />
         </fieldset>
       </form>
     )
@@ -46,7 +49,7 @@ class App extends React.Component {
   }
 
   guessResultMessage() {
-    const [guess, number] = [Number.parseInt(this.state.guess, 10), this.randomNumber];
+    const [guess, number] = [this.state.guess, this.randomNumber];
 
     if (guess < number) {
       return `My number is greater than ${guess}`
@@ -60,7 +63,11 @@ class App extends React.Component {
   }
 
   handleOnGuessSubmit(guess) {
-    this.setState({count: this.state.count + 1, guess: guess });
+    this.setState({
+      count: this.state.count + 1,
+      guess: Number.parseInt(guess, 10)
+      }
+    );
   }
 
   randomIntFromInterval(min, max) {
@@ -68,6 +75,7 @@ class App extends React.Component {
   }
 
   render() {
+    const gameOver = this.state.guess === this.randomNumber;
     return (
       <main>
         <h1>Number Guessing Game</h1>
@@ -76,6 +84,7 @@ class App extends React.Component {
         />
         <NumberGuessingForm
           OnGuessSubmit={this.handleOnGuessSubmit}
+          OnGameOver={gameOver}
         />
         <a href="#">New Game</a>
       </main>
