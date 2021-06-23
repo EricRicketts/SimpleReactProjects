@@ -1,5 +1,5 @@
 {
-  "name": "number-guessing-game",
+  "name": "number-guessing-game-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
