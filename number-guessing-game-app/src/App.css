@@ -45,6 +45,7 @@ input[type="submit"] {
   color: #ffffff;
   box-shadow: 0 0 1px 1px #780e24;
   border-radius: 11px;
+  cursor: pointer;
 }
 
 .active {
@@ -59,6 +60,10 @@ input[type="submit"] {
   text-shadow: none;
 }
 
-
-
-a { color: #cc183e; }
+button {
+  border: none;
+  color: #cc183e;
+  font-size: 20px;
+  background: none;
+  cursor: pointer;
+}
