@@ -38,15 +38,16 @@ class App extends React.Component {
   }
 
   guessResultMessage() {
-    const [count, guess, number] = [this.state.count, this.state.guess, this.randomNumber];
-    if (count === 0) {
-      return 'Guess an integer from 1 to 100';
-    } else if (guess < number) {
+    const [guess, number] = [Number.parseInt(this.state.guess, 10), this.randomNumber];
+
+    if (guess < number) {
       return `My number is greater than ${guess}`
     } else if (guess > number) {
       return `My number is less than ${guess}`
+    } else if (guess === number) {
+      return `You guessed it!!  It took ${this.state.count} guesses`
     } else {
-      return `You guessed it!!  It took ${count} guesses`
+      return 'Guess an integer from 1 to 100'
     }
   }
 
