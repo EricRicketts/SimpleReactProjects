@@ -57,23 +57,20 @@ class App extends React.Component {
   }
 
   guessResultMessage() {
-    const guess = Number.parseInt(this.state.guess, 10);
-    const number = this.randomNumber;
-    if (Number.isNaN(guess)) {
-      if (this.formRef.current) { this.formRef.current.guessInput.current.value = ''; }
-      return 'Guess an integer from 1 to 100'
-    } else {
-      return this.compareGuessToNumber(guess, number);
-    }
+    const [guess, number] = [this.state.guess, this.randomNumber];
+    const defaultMessage = 'Guess an integer number starting from 1 going to 100';
+
+    return Number.isInteger(guess) ? this.compareGuessToNumber(guess, number) : defaultMessage;
   }
 
   handleOnGuessSubmit(guess) {
-    // consider doing the user guess conditioning here
-    this.setState({
-      count: this.state.count + 1,
-      guess: Number.parseInt(guess, 10)
-      }
-    );
+    const integerRegex = /^[1-9]\d?[0]?$/;
+    if (integerRegex.test(guess)) {
+      this.setState({ count: this.state.count + 1, guess: Number.parseInt(guess, 10)});
+    } else {
+      this.formRef.current.guessInput.current.value = '';
+      this.setState({ count: this.state.count + 1, guess: '' });
+    }
   }
 
   newGame() {
@@ -87,7 +84,6 @@ class App extends React.Component {
   }
 
   render() {
-    const gameOver = this.state.guess === this.randomNumber;
     return (
       <main>
         <h1>Number Guessing Game</h1>
@@ -97,7 +93,7 @@ class App extends React.Component {
         <NumberGuessingForm
           ref={this.formRef}
           OnGuessSubmit={this.handleOnGuessSubmit}
-          OnGameOver={gameOver}
+          OnGameOver={this.state.guess === this.randomNumber}
         />
         <button onClick={this.newGame}>New Game</button>
       </main>
