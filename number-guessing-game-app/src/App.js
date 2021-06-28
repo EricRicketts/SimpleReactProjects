@@ -41,7 +41,8 @@ class GuessingStatusParagraph extends React.Component {
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { count: 0, guess: '' }
+    this.state = { guess: '' }
+    this.guessCount = 0;
     this.randomNumber = this.randomIntFromInterval(1, 100);
     this.handleOnGuessSubmit = this.handleOnGuessSubmit.bind(this);
     this.newGame = this.newGame.bind(this);
@@ -54,7 +55,7 @@ class App extends React.Component {
     } else if (guess > number) {
       return `My number is less than ${guess}`
     } else {
-      return `You guessed it!!  It took ${this.state.count} guesses`
+      return `You guessed it!!  It took ${this.guessCount} guesses`
     }
   }
 
@@ -68,17 +69,19 @@ class App extends React.Component {
   handleOnGuessSubmit(guess) {
     const integerRegex = /^[1-9]\d?[0]?$/;
     if (integerRegex.test(guess)) {
-      this.setState({ count: this.state.count + 1, guess: Number.parseInt(guess, 10)});
+      this.setState({ guess: Number.parseInt(guess, 10) });
     } else {
       this.formRef.current.guessInput.current.value = '';
-      this.setState({ count: this.state.count + 1, guess: '' });
+      this.setState({ guess: '' });
     }
+    this.guessCount += 1;
   }
 
   newGame() {
     this.formRef.current.guessInput.current.value = '';
+    this.guessCount = 0;
     this.randomNumber = this.randomIntFromInterval(1, 100);
-    this.setState({ count: 0, guess: '' });
+    this.setState({ guess: '' });
   }
 
   randomIntFromInterval(min, max) {

@@ -68,3 +68,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Design Notes on Number Guessing Game
+
+### Components
+
+1.  ```<GuessingStatusParagraph />``` shows user the status of the guess in relation to the random number. 
+2.  ```<NumberGuessingForm />``` allows user to submit his guess.
+3.  ```<App />``` top level component, required for _create-react-app_, incorporates the two above components plus some _React elements_ most notably a ```<button>``` which causes a new game to begin.
+
+### State
+1.   
+
