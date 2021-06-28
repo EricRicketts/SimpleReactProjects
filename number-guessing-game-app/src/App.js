@@ -16,10 +16,12 @@ class NumberGuessingForm extends React.Component {
   render() {
     const inputClassName = this.props.OnGameOver ? "inactive" : "active";
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} data-testid="form">
         <fieldset>
-          <input type="text" id="guess" name="guess" maxLength={3} ref={this.guessInput} />
-          <input type="submit" className={inputClassName}
+          <input type="text" id="guess" name="guess" maxLength={3}
+                 data-testid="input-text" ref={this.guessInput}
+          />
+          <input type="submit" className={inputClassName} data-testid="input-submit"
                  value="Guess" disabled={this.props.OnGameOver}
           />
         </fieldset>
@@ -31,7 +33,7 @@ class NumberGuessingForm extends React.Component {
 class GuessingStatusParagraph extends React.Component {
   render() {
     return (
-      <p>{this.props.GuessResultMessage}</p>
+      <p data-testid="results">{this.props.GuessResultMessage}</p>
     );
   }
 }
@@ -102,3 +104,4 @@ class App extends React.Component {
 }
 
 export default App;
+export { GuessingStatusParagraph, NumberGuessingForm }
