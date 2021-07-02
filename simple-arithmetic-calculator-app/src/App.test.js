@@ -2,7 +2,8 @@ import {render, screen, fireEvent, getByText, getByTestId} from '@testing-librar
 import * as React from 'react';
 import App, {
   CalculatorResult,
-  NumberInput
+  NumberInput,
+  SelectArithmeticOperation
 } from './App';
 
 describe('Simple Arithmetic Calculator Test', function () {
@@ -17,7 +18,7 @@ describe('Simple Arithmetic Calculator Test', function () {
   describe('Number Input', function () {
     let input;
     beforeEach(() => {
-      render(<NumberInput id={'foo'} name={'bar'} testId={'fizzbuzz'} />)
+      render(<NumberInput id={"foo"} name={"bar"} testId={"fizzbuzz"} />)
       input = screen.getByTestId('fizzbuzz');
     });
 
@@ -31,9 +32,26 @@ describe('Simple Arithmetic Calculator Test', function () {
       expect(input.value).toBe('');
     });
 
-    test('state is uncontrolled, controlled by underlying DOM element', () => {
+    test('state is controlled by underlying DOM element', () => {
       input.value = 'new input';
       expect(screen.getByDisplayValue('new input')).toBeInTheDocument();
     })
+  });
+
+  describe('Select Arithmetic Operation', function () {
+    let select;
+    beforeEach(() => {
+      render(<SelectArithmeticOperation id={"foo"} name={"bar"} testId={"fizzbuzz"} />)
+      select = screen.getByTestId('fizzbuzz');
+    });
+
+    test('default value should be add', () => {
+      expect(select.value).toBe('add');
+    });
+
+    test('state is controlled by underlying DOM element', () => {
+      select.value = 'multiply';
+      expect(screen.getByDisplayValue('x')).toBeInTheDocument();
+    });
   });
 });

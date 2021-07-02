@@ -33,6 +33,32 @@ class NumberInput extends React.Component {
   }
 }
 
+class SelectArithmeticOperation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.select = React.createRef();
+  }
+
+  render() {
+    return (
+      <>
+        <select
+          name={this.props.name}
+          id={this.props.id}
+          data-testid={this.props.testId}
+          ref={this.select}
+        >
+          <option value="add">+</option>
+          <option value="subtract">-</option>
+          <option value="multiply">x</option>
+          <option value="divide">/</option>
+        </select>
+      </>
+    );
+  }
+
+}
+
 class  App extends React.Component {
   constructor(props) {
     super(props);
@@ -91,4 +117,4 @@ class  App extends React.Component {
 }
 
 export default App;
-export { CalculatorResult, NumberInput };
+export { CalculatorResult, NumberInput, SelectArithmeticOperation };
