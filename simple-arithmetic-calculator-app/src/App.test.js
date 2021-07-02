@@ -65,26 +65,30 @@ describe('Simple Arithmetic Calculator Test', function () {
       secondNumber = screen.getByTestId('secondNumber');
     });
 
-    test('addition positive result', () => {
-      firstNumber.value = '15.55';
-      secondNumber.value = '10.45';
-      fireEvent.submit(form);
-      expect(screen.getByText(/26\.00/)).toBeInTheDocument();
-    });
+    describe('Valid Calculations', function () {
+      test('addition', () => {
+        [firstNumber.value, secondNumber.value] = ['-15.43', '10.67'];
+        fireEvent.submit(form);
+        expect(screen.getByText(/-4\.76/)).toBeInTheDocument();
+      });
 
-    test('addition negative result', () => {
-      firstNumber.value = '-15.43';
-      secondNumber.value = '10.67';
-      fireEvent.submit(form);
-      expect(screen.getByText(/-4\.76/)).toBeInTheDocument();
-    });
+      test('subtraction', () => {
+        [select.value, firstNumber.value, secondNumber.value] = ['subtract', '-4.89', '-9.23'];
+        fireEvent.submit(form);
+        expect(screen.getByText(/4\.34/)).toBeInTheDocument();
+      });
 
-    test('subtraction positive result', () => {
-      select.value = 'subtract';
-      firstNumber.value = '10.23';
-      secondNumber.value = '5.89';
-      fireEvent.submit(form);
-      expect(screen.getByText(/4\.34/)).toBeInTheDocument();
-    })
+      test('multiplication', () => {
+        [select.value, firstNumber.value, secondNumber.value] = ['multiply', '-8.56', '7.09'];
+        fireEvent.submit(form);
+        expect(screen.getByText(/-60\.69/)).toBeInTheDocument();
+      });
+
+      test('division', () => {
+        [select.value, firstNumber.value, secondNumber.value] = ['divide', '-50.12', '-12.73'];
+        fireEvent.submit(form);
+        expect(screen.getByText(/3\.94/)).toBeInTheDocument();
+      });
+    });
   });
 });

@@ -10,10 +10,6 @@ class CalculatorResult extends React.Component {
 }
 
 class NumberInput extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <>
@@ -32,10 +28,6 @@ class NumberInput extends React.Component {
 }
 
 class SelectArithmeticOperation extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <>
