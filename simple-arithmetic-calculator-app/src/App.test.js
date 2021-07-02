@@ -54,4 +54,37 @@ describe('Simple Arithmetic Calculator Test', function () {
       expect(screen.getByDisplayValue('x')).toBeInTheDocument();
     });
   });
+
+  describe('Top Level App Component', function () {
+    let form, select, firstNumber, secondNumber;
+    beforeEach(() => {
+      render(<App />);
+      form = screen.getByTestId('calculatorForm');
+      select = screen.getByTestId('operation');
+      firstNumber = screen.getByTestId('firstNumber');
+      secondNumber = screen.getByTestId('secondNumber');
+    });
+
+    test('addition positive result', () => {
+      firstNumber.value = '15.55';
+      secondNumber.value = '10.45';
+      fireEvent.submit(form);
+      expect(screen.getByText(/26\.00/)).toBeInTheDocument();
+    });
+
+    test('addition negative result', () => {
+      firstNumber.value = '-15.43';
+      secondNumber.value = '10.67';
+      fireEvent.submit(form);
+      expect(screen.getByText(/-4\.76/)).toBeInTheDocument();
+    });
+
+    test('subtraction positive result', () => {
+      select.value = 'subtract';
+      firstNumber.value = '10.23';
+      secondNumber.value = '5.89';
+      fireEvent.submit(form);
+      expect(screen.getByText(/4\.34/)).toBeInTheDocument();
+    })
+  });
 });

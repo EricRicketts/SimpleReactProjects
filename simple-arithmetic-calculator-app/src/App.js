@@ -12,7 +12,6 @@ class CalculatorResult extends React.Component {
 class NumberInput extends React.Component {
   constructor(props) {
     super(props);
-    this.input = React.createRef();
   }
 
   render() {
@@ -26,7 +25,6 @@ class NumberInput extends React.Component {
           id={this.props.id}
           name={this.props.name}
           data-testid={this.props.testId}
-          ref={this.input}
         />
       </>
     );
@@ -36,7 +34,6 @@ class NumberInput extends React.Component {
 class SelectArithmeticOperation extends React.Component {
   constructor(props) {
     super(props);
-    this.select = React.createRef();
   }
 
   render() {
@@ -46,7 +43,6 @@ class SelectArithmeticOperation extends React.Component {
           name={this.props.name}
           id={this.props.id}
           data-testid={this.props.testId}
-          ref={this.select}
         >
           <option value="add">+</option>
           <option value="subtract">-</option>
@@ -62,15 +58,14 @@ class SelectArithmeticOperation extends React.Component {
 class  App extends React.Component {
   constructor(props) {
     super(props);
-    this.calculatorResult = '5';
-    // this.state = { firstNumber: '', secondNumber: '', operation: 'add'};
-    // this.updateCalculator = this.updateCalculator.bind(this);
-    // this.calculatorResult = this.calculatorResult.bind(this);
+    this.state = { firstNumber: '', secondNumber: '', operation: 'add'};
+    this.calculatorResult = this.calculatorResult.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.form = React.createRef();
   }
 
-  /*
   areValidNumbers(firstNumber, secondNumber) {
-    const decimalNumberRegex = /^\d+\.?\d*$/;
+    const decimalNumberRegex = /^-?\d+\.?\d*$/;
     return decimalNumberRegex.test(firstNumber) && decimalNumberRegex.test(secondNumber);
   }
 
@@ -91,26 +86,51 @@ class  App extends React.Component {
     return performOperation[this.state.operation].toFixed(2);
   }
 
-  updateCalculator(firstNumber, secondNumber, operation) {
+  handleSubmit(event) {
+    event.preventDefault();
+    let [firstNumber, secondNumber, operation] = [
+      this.form.current.elements.firstNumber.value,
+      this.form.current.elements.secondNumber.value,
+      this.form.current.elements.operation.value
+    ];
     if (this.areValidNumbers(firstNumber, secondNumber)) {
       this.setState({ firstNumber: firstNumber, secondNumber: secondNumber, operation: operation });
     } else {
       this.setState( { firstNumber: '', secondNumber: '', operation: 'add' });
     }
   }
- */
+
   render() {
     return (
       <main>
         <h1>Simple Arithmetic Calculator</h1>
         <CalculatorResult
-          // calculatorResult={this.calculatorResult()}
-          calculatorResult={this.calculatorResult}
+          calculatorResult={this.calculatorResult()}
         />
-        {/*<CalculatorForm*/}
-        {/*  onOperationSubmit={this.updateCalculator}*/}
-        {/*  operation={this.state.operation}*/}
-        {/*/>*/}
+        <form
+          onSubmit={this.handleSubmit}
+          data-testid={"calculatorForm"}
+          ref={this.form}
+        >
+          <fieldset>
+            <NumberInput
+              id={'firstNumber'}
+              name={'firstNumber'}
+              testId={'firstNumber'}
+            />
+            <SelectArithmeticOperation
+              id={'operation'}
+              name={'operation'}
+              testId={'operation'}
+            />
+            <NumberInput
+              id={'secondNumber'}
+              name={'secondNumber'}
+              testId={'secondNumber'}
+            />
+            <button type="submit">=</button>
+          </fieldset>
+        </form>
       </main>
     )
   }
