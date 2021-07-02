@@ -50,7 +50,7 @@ class SelectArithmeticOperation extends React.Component {
 class  App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { firstNumber: '', secondNumber: '', operation: 'add'};
+    this.state = { firstNumber: '', secondNumber: '', operation: 'add' };
     this.calculatorResult = this.calculatorResult.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.form = React.createRef();
@@ -62,9 +62,17 @@ class  App extends React.Component {
   }
 
   calculatorResult() {
-    const nonValidNumber = [this.state.firstNumber, this.state.secondNumber].includes('');
-    return nonValidNumber ? '' : this.doCalculation();
+    const [firstNumber, secondNumber, operation] = [
+      this.state.firstNumber, this.state.secondNumber, this.state.operation
+    ];
+    if (!this.areValidNumbers(firstNumber, secondNumber)) {
+      return '';
+    } else if (operation === 'divide' && Number.parseFloat(secondNumber) === 0) {
+      return 'divide by zero';
+    } else {
+      return this.doCalculation();
     }
+  }
 
     doCalculation() {
     const firstNumber = Number.parseFloat(this.state.firstNumber);
@@ -75,7 +83,8 @@ class  App extends React.Component {
       'multiply': firstNumber * secondNumber,
       'divide': firstNumber / secondNumber
     }
-    return performOperation[this.state.operation].toFixed(2);
+    const result = performOperation[this.state.operation];
+    return Math.abs(result) < 0.01 ? result.toExponential(2) : result.toFixed(2);
   }
 
   handleSubmit(event) {
@@ -85,11 +94,7 @@ class  App extends React.Component {
       this.form.current.elements.secondNumber.value,
       this.form.current.elements.operation.value
     ];
-    if (this.areValidNumbers(firstNumber, secondNumber)) {
-      this.setState({ firstNumber: firstNumber, secondNumber: secondNumber, operation: operation });
-    } else {
-      this.setState( { firstNumber: '', secondNumber: '', operation: 'add' });
-    }
+    this.setState({ firstNumber: firstNumber, secondNumber: secondNumber, operation: operation });
   }
 
   render() {

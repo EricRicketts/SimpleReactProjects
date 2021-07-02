@@ -56,16 +56,17 @@ describe('Simple Arithmetic Calculator Test', function () {
   });
 
   describe('Top Level App Component', function () {
-    let form, select, firstNumber, secondNumber;
+    let form, select, firstNumber, secondNumber, result;
     beforeEach(() => {
       render(<App />);
       form = screen.getByTestId('calculatorForm');
       select = screen.getByTestId('operation');
       firstNumber = screen.getByTestId('firstNumber');
       secondNumber = screen.getByTestId('secondNumber');
+      result = screen.getByTestId('result');
     });
 
-    describe('Valid Calculations', function () {
+    describe('Valid Entries', function () {
       test('addition', () => {
         [firstNumber.value, secondNumber.value] = ['-15.43', '10.67'];
         fireEvent.submit(form);
@@ -88,6 +89,20 @@ describe('Simple Arithmetic Calculator Test', function () {
         [select.value, firstNumber.value, secondNumber.value] = ['divide', '-50.12', '-12.73'];
         fireEvent.submit(form);
         expect(screen.getByText(/3\.94/)).toBeInTheDocument();
+      });
+    });
+
+    describe('Invalid Entries', function () {
+      test('invalid number first number entry', () => {
+        [firstNumber.value, secondNumber.value] = ['-4.a', '5.0'];
+        fireEvent.submit(form);
+        expect(result.textContent).toBe('Result: ');
+      });
+
+      test('divide by zero', () => {
+        [select.value, firstNumber.value, secondNumber.value] = ['divide', '5', '0'];
+        fireEvent.submit(form);
+        expect(screen.getByText(/divide by zero/)).toBeInTheDocument();
       });
     });
   });
