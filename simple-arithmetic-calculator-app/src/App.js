@@ -4,56 +4,31 @@ import React from 'react';
 class CalculatorResult extends React.Component {
   render() {
     return (
-      <p>Result: {this.props.calculatorResult}</p>
+      <p data-testid="result">Result: {this.props.calculatorResult}</p>
     );
   }
 }
 
-class CalculatorForm extends React.Component {
-  constructor (props) {
+class NumberInput extends React.Component {
+  constructor(props) {
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    const firstNumber = event.target.elements.firstNumber;
-    const secondNumber = event.target.elements.secondNumber;
-    const operation = event.target.elements[1].value;
-    this.props.onOperationSubmit(firstNumber, secondNumber, operation);
+    this.input = React.createRef();
   }
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <fieldset>
-          <input
-            type="text"
-            id="firstNumber"
-            name="firstNumber"
-            placeholder="0"
-            maxLength="7"
-            size="7"
-            data-testid="firstNumber"
-          />
-          <select name="operation" id="operation" data-testid="operation">
-            <option value="add" selected>+</option>
-            <option value="subtract">-</option>
-            <option value="multiply">x</option>
-            <option value="divide">/</option>
-          </select>
-          <input
-            type="text"
-            id="secondNumber"
-            name="secondNumber"
-            placeholder="0"
-            maxLength="7"
-            size="7"
-            data-testid="secondNumber"
-          />
-          <button type="submit" data-testid="submit">=</button>
-        </fieldset>
-      </form>
+      <>
+        <input
+          type="text"
+          placeholder="0"
+          maxLength="7"
+          size="7"
+          id={this.props.id}
+          name={this.props.name}
+          data-testid={this.props.testId}
+          ref={this.input}
+        />
+      </>
     );
   }
 }
@@ -61,44 +36,59 @@ class CalculatorForm extends React.Component {
 class  App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { firstNumber: '', secondNumber: '' };
-    this.doCalculatorOperation = this.doCalculatorOperation.bind(this);
-    this.calculatorResult = this.calculatorResult.bind(this);
+    this.calculatorResult = '5';
+    // this.state = { firstNumber: '', secondNumber: '', operation: 'add'};
+    // this.updateCalculator = this.updateCalculator.bind(this);
+    // this.calculatorResult = this.calculatorResult.bind(this);
   }
 
-  calculatorResult(operation) {
-    // const firstNumber = Number.parseFloat(this.state.firstNumber);
-    // const secondNumber = Number.parseFloat(this.state.secondNumber);
-    const [firstNumber, secondNumber] = [5, 6];
+  /*
+  areValidNumbers(firstNumber, secondNumber) {
+    const decimalNumberRegex = /^\d+\.?\d*$/;
+    return decimalNumberRegex.test(firstNumber) && decimalNumberRegex.test(secondNumber);
+  }
+
+  calculatorResult() {
+    const nonValidNumber = [this.state.firstNumber, this.state.secondNumber].includes('');
+    return nonValidNumber ? '' : this.doCalculation();
+    }
+
+    doCalculation() {
+    const firstNumber = Number.parseFloat(this.state.firstNumber);
+    const secondNumber = Number.parseFloat(this.state.secondNumber);
     const performOperation = {
       'add': firstNumber + secondNumber,
       'subtract': firstNumber - secondNumber,
       'multiply': firstNumber * secondNumber,
       'divide': firstNumber / secondNumber
     }
-    // return performOperation[operation].toString();
-    return performOperation["add"];
+    return performOperation[this.state.operation].toFixed(2);
   }
 
-  doCalculatorOperation(firstNumber, secondNumber, operation) {
-    const firstNumberFloat = Number.parseFloat(firstNumber);
-    const secondNumberFloat = Number.parseFloat(secondNumber);
+  updateCalculator(firstNumber, secondNumber, operation) {
+    if (this.areValidNumbers(firstNumber, secondNumber)) {
+      this.setState({ firstNumber: firstNumber, secondNumber: secondNumber, operation: operation });
+    } else {
+      this.setState( { firstNumber: '', secondNumber: '', operation: 'add' });
+    }
   }
-
+ */
   render() {
     return (
       <main>
         <h1>Simple Arithmetic Calculator</h1>
         <CalculatorResult
-          calculatorResult={"5"}
+          // calculatorResult={this.calculatorResult()}
+          calculatorResult={this.calculatorResult}
         />
-        <CalculatorForm
-          onOperationSubmit={this.doCalculatorOperation}
-        />
+        {/*<CalculatorForm*/}
+        {/*  onOperationSubmit={this.updateCalculator}*/}
+        {/*  operation={this.state.operation}*/}
+        {/*/>*/}
       </main>
     )
   }
 }
 
 export default App;
-export { CalculatorResult, CalculatorForm };
+export { CalculatorResult, NumberInput };
