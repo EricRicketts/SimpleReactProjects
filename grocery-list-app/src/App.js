@@ -51,7 +51,7 @@ class App extends React.Component {
     return (
       <>
         <GroceryListEntryForm />
-        <div id="groceryList">
+        <div id="groceryListContainer">
           <h2>Groceries</h2>
           <GroceryList list={list} />
         </div>
