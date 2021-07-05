@@ -6,6 +6,7 @@ import App, {
 } from './App';
 
 describe('App Tests', function () {
+  let results, expected;
   describe('GuessingStatusParagraph Tests', function () {
     let paragraphText;
     beforeEach(() => {
@@ -68,7 +69,7 @@ describe('App Tests', function () {
       });
 
       test('There should be no entry in the guess field', () => {
-        expect(screen.getByTestId('input-text')).toHaveValue('');
+        expect(screen.getByTestId('guess')).toHaveValue('');
       });
 
       test('The guess button should be enabled', () => {
@@ -85,7 +86,7 @@ describe('App Tests', function () {
       beforeEach(() => {
         const { getByTestId, getByText } = render(<App />);
         form = getByTestId('form');
-        inputGuess = getByTestId('input-text');
+        inputGuess = getByTestId('guess');
         resultsParagraph = getByTestId('results');
         button = getByText('New Game');
       });
@@ -107,7 +108,19 @@ describe('App Tests', function () {
         fireEvent.submit(form);
         fireEvent.click(button);
         resultText = resultsParagraph.textContent;
-        expect(resultText).toBe('Guess an integer number starting from 1 going to 100');
+        expected = ['Guess an integer number starting from 1 going to 100', ''];
+        results = [resultText, inputGuess.value];
+        expect(results).toEqual(expected);
+      });
+
+      test('Make an invalid guess', () => {
+        inputGuess.value = 'ab';
+        fireEvent.submit(form);
+        fireEvent.click(button);
+        resultText = resultsParagraph.textContent;
+        expected = ['Guess an integer number starting from 1 going to 100', ''];
+        results = [resultText, inputGuess.value];
+        expect(results).toEqual(expected);
       });
 
       test('Play a full game', () => {

@@ -5,7 +5,11 @@ class NumberGuessingForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.guessInput = React.createRef();
+    this.formRef = React.createRef();
+  }
+
+  clearInput() {
+    this.formRef.current.elements.guess.value = '';
   }
 
   handleSubmit(event) {
@@ -16,10 +20,10 @@ class NumberGuessingForm extends React.Component {
   render() {
     const inputClassName = this.props.OnGameOver ? "inactive" : "active";
     return (
-      <form onSubmit={this.handleSubmit} data-testid="form">
+      <form onSubmit={this.handleSubmit} data-testid="form" ref={this.formRef} >
         <fieldset>
           <input type="text" id="guess" name="guess" maxLength={3}
-                 data-testid="input-text" ref={this.guessInput}
+                 data-testid="guess"
           />
           <input type="submit" className={inputClassName} data-testid="input-submit"
                  value="Guess" disabled={this.props.OnGameOver}
@@ -46,7 +50,7 @@ class App extends React.Component {
     this.randomNumber = this.randomIntFromInterval(1, 100);
     this.handleOnGuessSubmit = this.handleOnGuessSubmit.bind(this);
     this.newGame = this.newGame.bind(this);
-    this.formRef = React.createRef();
+    this.formComponentRef = React.createRef();
   }
 
   compareGuessToNumber(guess, number) {
@@ -71,14 +75,14 @@ class App extends React.Component {
     if (integerRegex.test(guess)) {
       this.setState({ guess: Number.parseInt(guess, 10) });
     } else {
-      this.formRef.current.guessInput.current.value = '';
+      this.formComponentRef.current.clearInput();
       this.setState({ guess: '' });
     }
     this.guessCount += 1;
   }
 
   newGame() {
-    this.formRef.current.guessInput.current.value = '';
+    this.formComponentRef.current.clearInput();
     this.guessCount = 0;
     this.randomNumber = this.randomIntFromInterval(1, 100);
     this.setState({ guess: '' });
@@ -96,7 +100,7 @@ class App extends React.Component {
           GuessResultMessage={this.guessResultMessage()}
         />
         <NumberGuessingForm
-          ref={this.formRef}
+          ref={this.formComponentRef}
           OnGuessSubmit={this.handleOnGuessSubmit}
           OnGameOver={this.state.guess === this.randomNumber}
         />
