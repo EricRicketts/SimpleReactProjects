@@ -1,0 +1,64 @@
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+#root {
+  margin: 0 auto;
+  width: 500px;
+  border: 20px solid #6FE86B;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+label {
+  color: #3B9C38;
+  font-size: 1em;
+  margin-bottom: 5px;
+  display: block;
+}
+
+input {
+  display: block;
+  margin-bottom: 10px;
+  height: 40px;
+  width: 100%;
+  border: 1px solid #cecece;
+  padding: 5px;
+  font-size: 1.5em;
+}
+
+fieldset {
+  border: none;
+}
+
+fieldset > h2 {
+  color: #3B9C38;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+input[name="quantity"] {
+  width: 60px;
+}
