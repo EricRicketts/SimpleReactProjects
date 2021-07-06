@@ -18,7 +18,7 @@ class SelectComponent extends React.Component {
         name={this.props.idNameTestIdAttributes}
         data-testid={this.props.idNameTestIdAttributes}
         onChange={this.handleSelectChoice}>
-        {this.props.options.map(option => <option value={option}>{option}</option>)}
+        {this.props.options.map((option, index) => <option key={index} value={option}>{option}</option>)}
       </select>
     );
   }
@@ -43,7 +43,7 @@ class App extends React.Component {
     const animalList = ['Animals', 'Bear', 'Ostrich'];
     const classificationList = ['Classification', 'Vertebrate', 'Bird'];
 
-    const [classification, animals] = ['Classifications', 'Animals'];
+    const [classification, animals] = ['classifications', 'animals'];
     return (
       <form>
         <SelectComponent
@@ -63,3 +63,4 @@ class App extends React.Component {
 }
 
 export default App;
+export { SelectComponent };
