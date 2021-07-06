@@ -32,11 +32,22 @@ class GroceryListEntryForm extends React.Component {
           <h2>Add an item</h2>
           <div className="groceryItemDescription">
             <label htmlFor="description">Description</label>
-            <input type="text" id="description" name="description" data-testid="description" />
+            <input
+              type="text"
+              id="description"
+              name="description"
+              data-testid="description"
+            />
           </div>
           <div className="groceryItemDescription">
             <label htmlFor="quantity">Quantity</label>
-            <input type="text" id="quantity" name="quantity" data-testid="quantity" />
+            <input
+              type="text"
+              id="quantity"
+              name="quantity"
+              placeholder="1"
+              data-testid="quantity"
+            />
           </div>
         </fieldset>
         <button type="submit">Add</button>
