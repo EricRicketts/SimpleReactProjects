@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import App, { SelectComponent } from './App';
+import { SelectComponent, SelectForm } from './App';
 
 describe('Selection Filter', function () {
   let results, expected, select, data;
@@ -29,7 +29,7 @@ describe('Selection Filter', function () {
     });
   });
 
-  describe('Top Level App Component', function () {
+  describe('SelectForm Component', function () {
     let animals, classification, button;
     beforeEach(() => {
       data = [
@@ -40,7 +40,7 @@ describe('Selection Filter', function () {
         { 'Ostrich': ['Vertebrate', 'Warm-blooded', 'Bird'] }
       ];
       render(
-        <App
+        <SelectForm
           data={data}
           classification={'classification'}
           animals={'animals'}

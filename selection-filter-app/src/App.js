@@ -1,6 +1,14 @@
 import './App.css';
 import React from 'react';
 
+const data = [
+  { 'Bear': ['Vertebrate', 'Warm-blooded', 'Mammal'] },
+  { 'Turtle': ['Vertebrate', 'Cold-blooded'] },
+  { 'Whale': ['Vertebrate', 'Warm-blooded', 'Mammal'] },
+  { 'Salmon': ['Vertebrate', 'Cold-blooded'] },
+  { 'Ostrich': ['Vertebrate', 'Warm-blooded', 'Bird'] }
+];
+const [classification, animals] = ['classification', 'animals'];
 class SelectComponent extends React.Component {
   render() {
     return (
@@ -16,7 +24,7 @@ class SelectComponent extends React.Component {
   }
 }
 
-class App extends React.Component {
+class SelectForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = { classification: 'Classification', animal: 'Animals' }
@@ -99,5 +107,17 @@ class App extends React.Component {
   }
 }
 
+class App extends React.Component {
+  render() {
+    return (
+      <SelectForm
+        data={data}
+        classification={classification}
+        animals={animals}
+      />
+    );
+  }
+}
+
 export default App;
-export { SelectComponent };
+export { SelectComponent, SelectForm };
