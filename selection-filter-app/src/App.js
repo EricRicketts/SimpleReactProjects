@@ -22,6 +22,7 @@ class App extends React.Component {
     this.state = { classification: 'Classification', animal: 'Animals' }
     this.handleClassificationSelection = this.handleClassificationSelection.bind(this);
     this.handleAnimalSelection = this.handleAnimalSelection.bind(this);
+    this.resetSelects = this.resetSelects.bind(this);
     const allAnimals = this.allAnimals(this.props.data);
     const allClassifications = this.allClassifications(this.props.data);
     this.animalList = ['Animals', ...allAnimals]
@@ -45,7 +46,17 @@ class App extends React.Component {
     }, []);
   }
 
-  handleClassificationSelection(optionValue) {
+  handleClassificationSelection(event) {
+    event.preventDefault();
+    const classificationValue = event.target.value;
+    this.setState({ classification: classificationValue });
+    this.animalList = this.props.data.reduce((memo, dataItem) => {
+      Object.entries(dataItem).forEach(arr => {
+        const [key, value] = [arr[0], arr[1]];
+          if (value.includes(classificationValue)) memo.push(key);
+      });
+      return memo;
+    }, []);
   }
 
   handleAnimalSelection(event) {
@@ -56,6 +67,15 @@ class App extends React.Component {
       return Object.keys(dataItem)[0] === animalValue;
     });
     this.classificationList = Object.values(foundItem).flat();
+  }
+
+  resetSelects(event) {
+    event.preventDefault();
+    this.setState({ classification: 'Classification', animal: 'Animals' });
+    const allAnimals = this.allAnimals(this.props.data);
+    const allClassifications = this.allClassifications(this.props.data);
+    this.animalList = ['Animals', ...allAnimals]
+    this.classificationList = ['Classification', ...allClassifications];
   }
 
   render() {
@@ -73,7 +93,7 @@ class App extends React.Component {
           value={this.state.animal}
           handleChange={this.handleAnimalSelection}
         />
-        <button type="reset">Clear</button>
+        <button type="reset" onClick={this.resetSelects}>Clear</button>
       </form>
     );
   }

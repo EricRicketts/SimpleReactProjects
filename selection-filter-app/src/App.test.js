@@ -30,7 +30,7 @@ describe('Selection Filter', function () {
   });
 
   describe('Top Level App Component', function () {
-    let animals, classification;
+    let animals, classification, button;
     beforeEach(() => {
       data = [
         { 'Bear': ['Vertebrate', 'Warm-blooded', 'Mammal'] },
@@ -48,6 +48,7 @@ describe('Selection Filter', function () {
       );
       animals = screen.getByTestId('animals');
       classification = screen.getByTestId('classification');
+      button = screen.getByRole('button');
     });
 
     test('renders original animal content', function () {
@@ -64,11 +65,32 @@ describe('Selection Filter', function () {
       expect(results).toEqual(expected);
     });
 
-    test('Selecting an animal changes the classification list', function () {
+    test('selecting an animal changes the classification list', function () {
       fireEvent.change(animals, { target: { value: 'Bear' } });
       expected = ['Vertebrate', 'Warm-blooded', 'Mammal'];
       results = [];
       Array.from(classification.children).forEach(option => results.push(option.value));
+      expect(results).toEqual(expected);
+    });
+
+    test('selecting a classification changes the animal list', function () {
+      fireEvent.change(classification, { target: { value: 'Warm-blooded' } });
+      expected = ['Bear', 'Whale', 'Ostrich'];
+      results = [];
+      Array.from(animals.children).forEach(option => results.push(option.value));
+      expect(results).toEqual(expected);
+    });
+
+    test('clear button resets the application', function () {
+      const allClassifications = ['Classification', 'Vertebrate', 'Warm-blooded', 'Mammal', 'Cold-blooded', 'Bird'];
+      const allAnimals = ['Animals', 'Bear', 'Turtle', 'Whale', 'Salmon', 'Ostrich'];
+      fireEvent.change(animals, { target: { value: 'Ostrich' } });
+      results = [];
+      expected = ['Vertebrate', 'Warm-blooded', 'Bird'].concat(allClassifications, allAnimals);
+      Array.from(classification.children).forEach(option => results.push(option.value));
+      fireEvent.click(button);
+      Array.from(classification.children).forEach(option => results.push(option.value));
+      Array.from(animals.children).forEach(option => results.push(option.value));
       expect(results).toEqual(expected);
     });
   });
