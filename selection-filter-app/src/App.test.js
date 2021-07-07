@@ -56,5 +56,20 @@ describe('Selection Filter', function () {
       Array.from(animals.children).forEach(option => results.push(option.value));
       expect(results).toEqual(expected);
     });
+
+    test('renders original characteristics content', function() {
+      expected = ['Classification', 'Vertebrate', 'Warm-blooded', 'Mammal', 'Cold-blooded', 'Bird'];
+      results = [];
+      Array.from(classification.children).forEach(option => results.push(option.value));
+      expect(results).toEqual(expected);
+    });
+
+    test('Selecting an animal changes the classification list', function () {
+      fireEvent.change(animals, { target: { value: 'Bear' } });
+      expected = ['Vertebrate', 'Warm-blooded', 'Mammal'];
+      results = [];
+      Array.from(classification.children).forEach(option => results.push(option.value));
+      expect(results).toEqual(expected);
+    });
   });
 });

@@ -23,8 +23,9 @@ class App extends React.Component {
     this.handleClassificationSelection = this.handleClassificationSelection.bind(this);
     this.handleAnimalSelection = this.handleAnimalSelection.bind(this);
     const allAnimals = this.allAnimals(this.props.data);
+    const allClassifications = this.allClassifications(this.props.data);
     this.animalList = ['Animals', ...allAnimals]
-    this.classificationList = ['Classification'];
+    this.classificationList = ['Classification', ...allClassifications];
   }
 
   allAnimals(data) {
@@ -34,10 +35,27 @@ class App extends React.Component {
     }, [])
   }
 
+  allClassifications(data) {
+    return data.reduce((memo, dataItem) => {
+      const classifications = Object.values(dataItem).flat();
+      classifications.forEach(classification => {
+        if (!memo.includes(classification)) memo.push(classification);
+      });
+      return memo;
+    }, []);
+  }
+
   handleClassificationSelection(optionValue) {
   }
 
-  handleAnimalSelection(optionValue) {
+  handleAnimalSelection(event) {
+    event.preventDefault();
+    const animalValue = event.target.value;
+    this.setState({ animal: animalValue });
+    const foundItem = this.props.data.find(dataItem => {
+      return Object.keys(dataItem)[0] === animalValue;
+    });
+    this.classificationList = Object.values(foundItem).flat();
   }
 
   render() {
