@@ -2,17 +2,18 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import App, { SelectComponent } from './App';
 
 describe('Selection Filter', function () {
-  let results, expected;
+  let results, expected, select, data;
   describe('Select Component', function () {
-    let select, selectHandler;
+    let selectHandler, list, idNameTestIdAttributes;
     beforeEach(() => {
       selectHandler = jest.fn();
-      const list = ['Characteristics', 'Cold-blooded', 'Warm-blooded'];
-      const idNameTestIdAttributes = 'classifications'
+      list = ['Characteristics', 'Cold-blooded', 'Warm-blooded'];
+      idNameTestIdAttributes = 'classifications'
       render(<SelectComponent
-        options={list}
+        optionList={list}
         idNameTestIdAttributes={idNameTestIdAttributes}
-        onHandleSelectChoice={selectHandler}
+        value={list[0]}
+        handleChange={selectHandler}
       />);
       select = screen.getByTestId('classifications');
     });
@@ -24,6 +25,35 @@ describe('Selection Filter', function () {
       let allOptionElements = optionsArray.every(el => el.constructor.name === 'HTMLOptionElement');
       results.push(allOptionElements);
       optionsArray.forEach(option => results.push(option.value));
+      expect(results).toEqual(expected);
+    });
+  });
+
+  describe('Top Level App Component', function () {
+    let animals, classification;
+    beforeEach(() => {
+      data = [
+        { 'Bear': ['Vertebrate', 'Warm-blooded', 'Mammal'] },
+        { 'Turtle': ['Vertebrate', 'Cold-blooded'] },
+        { 'Whale': ['Vertebrate', 'Warm-blooded', 'Mammal'] },
+        { 'Salmon': ['Vertebrate', 'Cold-blooded'] },
+        { 'Ostrich': ['Vertebrate', 'Warm-blooded', 'Bird'] }
+      ];
+      render(
+        <App
+          data={data}
+          classification={'classification'}
+          animals={'animals'}
+        />
+      );
+      animals = screen.getByTestId('animals');
+      classification = screen.getByTestId('classification');
+    });
+
+    test('renders original animal content', function () {
+      expected = ['Animals', 'Bear', 'Turtle', 'Whale', 'Salmon', 'Ostrich'];
+      results = [];
+      Array.from(animals.children).forEach(option => results.push(option.value));
       expect(results).toEqual(expected);
     });
   });

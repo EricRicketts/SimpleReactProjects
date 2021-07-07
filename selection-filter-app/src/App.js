@@ -2,23 +2,15 @@ import './App.css';
 import React from 'react';
 
 class SelectComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleSelectChoice = this.handleSelectChoice.bind(this);
-  }
-
-  handleSelectChoice(event) {
-    this.props.onHandleSelectChoice(event.target.value);
-  }
-
   render() {
     return (
       <select
         id={this.props.idNameTestIdAttributes}
         name={this.props.idNameTestIdAttributes}
         data-testid={this.props.idNameTestIdAttributes}
-        onChange={this.handleSelectChoice}>
-        {this.props.options.map((option, index) => <option key={index} value={option}>{option}</option>)}
+        value={this.props.value}
+        onChange={this.props.handleChange}>
+        {this.props.optionList.map((option, index) => <option key={index} value={option}>{option}</option>)}
       </select>
     );
   }
@@ -27,34 +19,41 @@ class SelectComponent extends React.Component {
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { classification: 'Classification', animal: 'Animals' }
     this.handleClassificationSelection = this.handleClassificationSelection.bind(this);
     this.handleAnimalSelection = this.handleAnimalSelection.bind(this);
+    const allAnimals = this.allAnimals(this.props.data);
+    this.animalList = ['Animals', ...allAnimals]
+    this.classificationList = ['Classification'];
   }
 
-  handleClassificationSelection(event) {
-    event.preventDefault();
+  allAnimals(data) {
+    return data.reduce((memo, dataItem) => {
+      memo.push(Object.keys(dataItem)[0]);
+      return memo;
+    }, [])
   }
 
-  handleAnimalSelection(event) {
-    event.preventDefault();
+  handleClassificationSelection(optionValue) {
+  }
+
+  handleAnimalSelection(optionValue) {
   }
 
   render() {
-    const animalList = ['Animals', 'Bear', 'Ostrich'];
-    const classificationList = ['Classification', 'Vertebrate', 'Bird'];
-
-    const [classification, animals] = ['classifications', 'animals'];
     return (
       <form>
         <SelectComponent
-          options={classificationList}
-          idNameTestIdAttributes={classification}
-          onHandleSelectChoice={this.handleClassificationSelection}
+          optionList={this.classificationList}
+          idNameTestIdAttributes={this.props.classification}
+          value={this.state.classification}
+          handleChange={this.handleClassificationSelection}
         />
         <SelectComponent
-          options={animalList}
-          idNameTestidAttributes={animals}
-          onHandleSelectChoice={this.handleAnimalSelection}
+          optionList={this.animalList}
+          idNameTestIdAttributes={this.props.animals}
+          value={this.state.animal}
+          handleChange={this.handleAnimalSelection}
         />
         <button type="reset">Clear</button>
       </form>
