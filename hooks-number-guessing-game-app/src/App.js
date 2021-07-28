@@ -1,24 +1,28 @@
-import logo from './logo.svg';
+import { guessResultText } from './javascript/guess_result_text'
+import { GuessResultParagraph } from "./javascript/guess_result_paragraph";
+import { GuessNumberForm } from "./javascript/guess_number_form";
 import './App.css';
 
 function App() {
+  let [count, randomNumber] = [1, 2];
+  function handleGuessSubmit(event) {
+    event.preventDefault();
+  }
+  function newGame(event) {
+    event.preventDefault();
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <h1>Number Guess Game</h1>
+      <GuessResultParagraph
+        guessResultMessage={guessResultText(2, 50, 7)}
+      />
+      <GuessNumberForm
+        onGuessSubmit={handleGuessSubmit}
+        onGameOver={count === randomNumber}
+      />
+      <button onClick={newGame}>New Game</button>
+    </main>
   );
 }
 
