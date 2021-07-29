@@ -19,7 +19,7 @@ function App() {
     if (integerRegex.test(guess)) {
       setGuess(Number.parseInt(guess, 10));
     } else {
-      guessElement.clearInput();
+      guessElement.value = '';
       setGuess('');
     }
     count += 1;
@@ -27,6 +27,10 @@ function App() {
 
   function newGame(event) {
     event.preventDefault();
+    randomNumber = randomNumberFromInterval(1, 100)
+    count = 0;
+    event.target.previousElementSibling.firstElementChild.firstElementChild.value = '';
+    setGuess('');
   }
 
   return (

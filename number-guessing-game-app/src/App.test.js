@@ -116,7 +116,6 @@ describe('App Tests', function () {
       test('Make an invalid guess', () => {
         inputGuess.value = 'ab';
         fireEvent.submit(form);
-        fireEvent.click(button);
         resultText = resultsParagraph.textContent;
         expected = ['Guess an integer number starting from 1 going to 100', ''];
         results = [resultText, inputGuess.value];

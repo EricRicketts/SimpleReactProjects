@@ -23,7 +23,7 @@ describe('App Tests', function() {
     });
   });
 
-  describe('Guess Result Paragraph', function () {
+  describe('Guess Result Paragraph', function() {
     test('renders a paragraph with text', function() {
       render(<GuessResultParagraph guessResultMessage={guessResultText(25, 50, 7)}/>);
       let resultParagraph = screen.getByText('25 is less than the number.', {selector: 'p'});
@@ -31,7 +31,7 @@ describe('App Tests', function() {
     });
   });
 
-  describe('Guess Number Form', function () {
+  describe('Guess Number Form', function() {
     let handleOnGuessSubmit, form, inputSubmit;
     beforeEach(() => {
       handleOnGuessSubmit = jest.fn();
@@ -49,8 +49,9 @@ describe('App Tests', function() {
     });
 
     test('submit button enabled when game not over', function() {
-      expect(inputSubmit).toHaveClass('active');
-      expect(inputSubmit).toBeEnabled();
+      expected = ['active', false]
+      results = [inputSubmit.className, inputSubmit.disabled];
+      expect(results).toEqual(expected);
     });
 
     test('submit button disabled when game over', function() {
@@ -59,12 +60,13 @@ describe('App Tests', function() {
         onGameOver={true}
       />);
       inputSubmit = container.querySelector('input[type=submit]')
-      expect(inputSubmit).toHaveClass('inactive');
-      expect(inputSubmit).toBeDisabled();
+      expected = ['inactive', true];
+      results = [inputSubmit.className, inputSubmit.disabled];
+      expect(results).toEqual(expected);
     });
   });
 
-  describe('Game Initialization', function () {
+  describe('Game Initialization', function() {
     let inputGuess, inputSubmit, resultsParagraph;
     beforeEach(() => {
       render(<App/>);
@@ -78,8 +80,9 @@ describe('App Tests', function() {
     });
 
     test('the guess button should be enabled', function() {
-      expect(inputSubmit).toHaveClass('active');
-      expect(inputSubmit).toBeEnabled();
+      expected = ['active', false];
+      results = [inputSubmit.className, inputSubmit.disabled];
+      expect(results).toEqual(expected);
     });
 
     test('initial prompt should be present', function() {
@@ -97,7 +100,7 @@ describe('App Tests', function() {
       newGameButton = screen.getByText('New Game');
     });
 
-    test('play one turn', function() {
+    test.skip('play one turn', function() {
       let allowedResults = [
         '50 is less than the number.', '50 is greater than the number.',
         'You guessed it!!  It took 1 guesses.'
@@ -105,6 +108,23 @@ describe('App Tests', function() {
       inputGuessElement.value = '50';
       fireEvent.submit(form);
       expect(allowedResults).toContain(resultsParagraph.textContent);
+    });
+
+    test.skip('start a new game', function() {
+      inputGuessElement.value = '50';
+      fireEvent.submit(form);
+      userEvent.click(newGameButton);
+      expected = ['Guess an integer number from 1 to 100 inclusive.', ''];
+      results = [resultsParagraph.textContent, inputGuessElement.value];
+      expect(results).toEqual(expected);
+    });
+
+    test('make an invalid guess', function() {
+      inputGuessElement.value = 'ab';
+      fireEvent.submit(form);
+      expected = ['Guess an integer number from 1 to 100 inclusive.', ''];
+      results = [resultsParagraph.textContent, inputGuessElement.value];
+      expect(results).toEqual(expected);
     });
   });
 });

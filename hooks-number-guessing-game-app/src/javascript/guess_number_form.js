@@ -1,3 +1,5 @@
+import React from 'react';
+
 export function GuessNumberForm(props) {
   function handleSubmit(event) {
     event.preventDefault()
@@ -10,8 +12,8 @@ export function GuessNumberForm(props) {
         <input type="text"
                id="guess"
                name="guess"
-               data-testid="guess"
                maxLength="3"
+               data-testid="guess"
         />
         <input type="submit"
                value="Guess"
