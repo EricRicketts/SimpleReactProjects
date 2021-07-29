@@ -29,7 +29,7 @@ function App() {
     event.preventDefault();
     randomNumber = randomNumberFromInterval(1, 100)
     count = 0;
-    event.target.previousElementSibling.firstElementChild.firstElementChild.value = '';
+    event.target.previousElementSibling.reset();
     setGuess('');
   }
 

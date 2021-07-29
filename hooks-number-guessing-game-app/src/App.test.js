@@ -90,7 +90,7 @@ describe('App Tests', function() {
     });
   });
 
-  describe('Game Play', function() {
+  describe('Game Play Edge Conditions And Full Game', function() {
     let form, inputGuessElement, resultsParagraph, newGameButton;
     beforeEach(() => {
       render(<App />);
@@ -100,17 +100,11 @@ describe('App Tests', function() {
       newGameButton = screen.getByText('New Game');
     });
 
-    test.skip('play one turn', function() {
-      let allowedResults = [
-        '50 is less than the number.', '50 is greater than the number.',
-        'You guessed it!!  It took 1 guesses.'
-      ];
-      inputGuessElement.value = '50';
-      fireEvent.submit(form);
-      expect(allowedResults).toContain(resultsParagraph.textContent);
+    afterEach(() => {
+      userEvent.click(newGameButton);
     });
 
-    test.skip('start a new game', function() {
+    test('start a new game', function() {
       inputGuessElement.value = '50';
       fireEvent.submit(form);
       userEvent.click(newGameButton);
@@ -125,6 +119,32 @@ describe('App Tests', function() {
       expected = ['Guess an integer number from 1 to 100 inclusive.', ''];
       results = [resultsParagraph.textContent, inputGuessElement.value];
       expect(results).toEqual(expected);
+    });
+
+    test('play a full game', function () {
+      let guess = 50;
+      let [maxGuess, minGuess] = [100, 1];
+      let gameOverFlag = false;
+      let guessCount = 1;
+      inputGuessElement.value = guess.toString();
+      fireEvent.submit(form);
+      while (!gameOverFlag) {
+        if (resultsParagraph.textContent.includes('guessed')) {
+          gameOverFlag = true;
+        } else {
+          if (resultsParagraph.textContent.includes('is greater')) {
+            maxGuess = guess;
+            guess = Math.floor((guess + minGuess) / 2)
+          } else {
+            minGuess = guess
+            guess = Math.floor((guess + maxGuess) / 2);
+          }
+          guessCount += 1;
+          inputGuessElement.value = guess.toString();
+          fireEvent.submit(form);
+        }
+      }
+      expect(resultsParagraph.textContent).toBe(`You guessed it!!  It took ${guessCount} guesses.`);
     });
   });
 });
