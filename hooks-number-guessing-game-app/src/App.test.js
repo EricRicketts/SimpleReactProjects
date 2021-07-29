@@ -40,14 +40,20 @@ describe('App Tests', function() {
       handleOnGuessSubmit = jest.fn();
       render(<GuessNumberForm
         onGuessSubmit={handleOnGuessSubmit}
-        onGameOver={true}
+        onGameOver={false}
       />);
       form = screen.getByTestId('form');
       inputSubmit = screen.getByTestId('input-submit');
     });
+
     test('the submit handler should be called', function() {
       fireEvent.submit(form);
       expect(handleOnGuessSubmit).toHaveBeenCalledTimes(1);
+    });
+
+    test('submit button enabled when game not over', function() {
+      expect(inputSubmit).toHaveClass('active');
+      expect(inputSubmit).toBeEnabled();
     });
   });
 });
