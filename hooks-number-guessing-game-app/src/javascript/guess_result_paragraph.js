@@ -1,5 +1,5 @@
 export function GuessResultParagraph(props) {
   return (
-    <p>{props.guessResultMessage}</p>
+    <p data-testid="results">{props.guessResultMessage}</p>
   );
 }

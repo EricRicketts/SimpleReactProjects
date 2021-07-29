@@ -8,19 +8,16 @@ import App from './App';
 describe('App Tests', function() {
   let results, expected;
   describe('Guess Result Text', function () {
-    let number, guesses;
-      beforeEach(() => {
-        number = 50;
-        guesses = [25, 75, 50];
-      });
     test('yields appropriate text on comparisons', function() {
+      let number = 50
+      let dataArray = [['', 0], [25, 7], [75, 7], [50, 7]]
       results = [];
       expected = [
-        'Your guess is less than the number.', 'Your guess is more than the number.',
-        'You guessed it!!  It took 7 guesses.'
+        'Guess an integer number from 1 to 100 inclusive.', '25 is less than the number.',
+        '75 is greater than the number.', 'You guessed it!!  It took 7 guesses.'
       ];
-      guesses.forEach(guess => {
-        results.push(guessResultText(guess, number, 7));
+      dataArray.forEach(([guess, count]) => {
+        results.push(guessResultText(guess, number, count));
       });
       expect(results).toEqual(expected);
     });
@@ -29,7 +26,7 @@ describe('App Tests', function() {
   describe('Guess Result Paragraph', function () {
     test('renders a paragraph with text', function() {
       render(<GuessResultParagraph guessResultMessage={guessResultText(25, 50, 7)}/>);
-      let resultParagraph = screen.getByText('Your guess is less than the number.', {selector: 'p'});
+      let resultParagraph = screen.getByText('25 is less than the number.', {selector: 'p'});
       expect(resultParagraph).toBeInTheDocument();
     });
   });
@@ -54,6 +51,60 @@ describe('App Tests', function() {
     test('submit button enabled when game not over', function() {
       expect(inputSubmit).toHaveClass('active');
       expect(inputSubmit).toBeEnabled();
+    });
+
+    test('submit button disabled when game over', function() {
+      const { container } = render(<GuessNumberForm
+        onGuessSubmit={handleOnGuessSubmit}
+        onGameOver={true}
+      />);
+      inputSubmit = container.querySelector('input[type=submit]')
+      expect(inputSubmit).toHaveClass('inactive');
+      expect(inputSubmit).toBeDisabled();
+    });
+  });
+
+  describe('Game Initialization', function () {
+    let inputGuess, inputSubmit, resultsParagraph;
+    beforeEach(() => {
+      render(<App/>);
+      inputGuess = screen.getByTestId('guess');
+      inputSubmit = screen.getByTestId('input-submit');
+      resultsParagraph = screen.getByTestId('results');
+    });
+
+    test('there should be no entry in the guess field', function() {
+      expect(inputGuess).toHaveValue('');
+    });
+
+    test('the guess button should be enabled', function() {
+      expect(inputSubmit).toHaveClass('active');
+      expect(inputSubmit).toBeEnabled();
+    });
+
+    test('initial prompt should be present', function() {
+      expect(resultsParagraph).toHaveTextContent('Guess an integer number from 1 to 100 inclusive.');
+    });
+  });
+
+  describe('Game Play', function() {
+    let form, inputGuessElement, resultsParagraph, newGameButton;
+    beforeEach(() => {
+      render(<App />);
+      form = screen.getByTestId('form');
+      inputGuessElement = screen.getByTestId('guess');
+      resultsParagraph = screen.getByTestId('results');
+      newGameButton = screen.getByText('New Game');
+    });
+
+    test('play one turn', function() {
+      let allowedResults = [
+        '50 is less than the number.', '50 is greater than the number.',
+        'You guessed it!!  It took 1 guesses.'
+      ];
+      inputGuessElement.value = '50';
+      fireEvent.submit(form);
+      expect(allowedResults).toContain(resultsParagraph.textContent);
     });
   });
 });

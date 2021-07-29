@@ -1,8 +1,9 @@
 export function GuessNumberForm(props) {
   function handleSubmit(event) {
     event.preventDefault()
-    props.onGuessSubmit(event.target.elements.guess.value);
+    props.onGuessSubmit(event);
   }
+
   return (
     <form onSubmit={handleSubmit} data-testid="form">
       <fieldset>
