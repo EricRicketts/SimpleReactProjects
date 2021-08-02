@@ -1,15 +1,17 @@
 import React from 'react';
 import { guessResultText } from './javascript/guess_result_text'
-import { randomNumberFromInterval } from "./javascript/random_number_from_interval";
 import { GuessResultParagraph } from "./javascript/guess_result_paragraph";
 import { GuessNumberForm } from "./javascript/guess_number_form";
+import { randomNumber, count, incrementCount, resetCount, initializeRandomNumber }
+  from "./javascript/count_and_random_number";
 import './App.css';
-
-let randomNumber = randomNumberFromInterval(1, 100);
-let count = 0;
 
 function App() {
   const [guess, setGuess] = React.useState('');
+  React.useEffect(() => {
+    resetCount();
+    initializeRandomNumber();
+  }, []);
 
   function handleGuessSubmit(event) {
     const guessElement = event.target.elements.guess
@@ -22,13 +24,13 @@ function App() {
       guessElement.value = '';
       setGuess('');
     }
-    count += 1;
+    incrementCount();
   }
 
   function newGame(event) {
     event.preventDefault();
-    randomNumber = randomNumberFromInterval(1, 100)
-    count = 0;
+    resetCount();
+    initializeRandomNumber();
     event.target.previousElementSibling.reset();
     setGuess('');
   }
