@@ -4,6 +4,12 @@ import './App.css';
 
 function App() {
   const [result, setResult] = React.useState('');
+  const calculate = {
+    "+": add,
+    "-": subtract,
+    "x": multiply,
+    "/": divide
+  }
 
   function add(firstNumber, secondNumber) {
     return firstNumber.plus(secondNumber);
@@ -19,18 +25,14 @@ function App() {
 
   function onSubmitHandler(event) {
     event.preventDefault();
+
     Decimal.set({ precision: 8, rounding: 7});
-    const calculate = {
-      "+": add,
-      "-": subtract,
-      "x": multiply,
-      "/": divide
-    }
     let form = event.target;
     let formData = new FormData(form);
-    const operation = formData.get('operation');
-    const [firstNumber, secondNumber] = [new Decimal(Number(formData.get('firstNumber'))),
-      new Decimal(Number(formData.get('secondNumber')))];
+
+    const [firstNumber, secondNumber, operation] = [new Decimal(Number(formData.get('firstNumber'))),
+      new Decimal(Number(formData.get('secondNumber'))), formData.get('operation')];
+
     let numericResult = new Decimal(calculate[operation](firstNumber, secondNumber));
     setResult(numericResult.toString())
   }
