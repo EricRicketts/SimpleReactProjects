@@ -1,0 +1,76 @@
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+main {
+  width: 25%;
+  margin: 10px auto 0;
+  padding: 30px 0;
+  border: none;
+  border-radius: 10px;
+  background-color: #336699;
+}
+
+h2, p {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+p, .numberInput, select, input[type="submit"] {
+  font-size: 1.5em;
+}
+
+.numberInput, select, input[type="submit"] {
+  border-radius: 5px;
+  border: none;
+}
+
+select, input[type="submit"] {
+  width: 5%;
+  background-color: lightgrey;
+}
+
+fieldset {
+  border: none;
+  display: flex;
+  justify-content: center;
+}
+
+select {
+  margin: 0 10px;
+  padding-left: 1.2%;
+  appearance: none;
+}
+
+.numberInput {
+  padding: 0.25em 0.5em;
+  width: 25%;
+}
+
+input[type="submit"] {
+  margin-left: 10px;
+}
