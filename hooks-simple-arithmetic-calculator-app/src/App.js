@@ -1,11 +1,50 @@
+import React from 'react';
+import Decimal from "decimal.js";
 import './App.css';
 
 function App() {
+  const [result, setResult] = React.useState('');
+
+  function add(firstNumber, secondNumber) {
+    return firstNumber.plus(secondNumber);
+  }
+
+  function divide(firstNumber, secondNumber) {
+    return firstNumber.div(secondNumber);
+  }
+
+  function multiply(firstNumber, secondNumber) {
+    return firstNumber.times(secondNumber);
+  }
+
+  function onSubmitHandler(event) {
+    event.preventDefault();
+    Decimal.set({ precision: 8, rounding: 7});
+    const calculate = {
+      "+": add,
+      "-": subtract,
+      "x": multiply,
+      "/": divide
+    }
+    let form = event.target;
+    let formData = new FormData(form);
+    const operation = formData.get('operation');
+    const [firstNumber, secondNumber] = [new Decimal(Number(formData.get('firstNumber'))),
+      new Decimal(Number(formData.get('secondNumber')))];
+    let numericResult = new Decimal(calculate[operation](firstNumber, secondNumber));
+    setResult(numericResult.toString())
+  }
+
+  function subtract(firstNumber, secondNumber) {
+    return  firstNumber.minus(secondNumber);
+  }
+
+
   return (
     <main>
       <h2>Simple Arithmetic Calculator</h2>
-      <p>Result:</p>
-      <form>
+      <p data-testid="result">Result: {result}</p>
+      <form data-testid="arithmeticForm" onSubmit={onSubmitHandler}>
         <fieldset>
           <input type="text"
                  name="firstNumber"
@@ -17,7 +56,9 @@ function App() {
                  max="10000"
           />
           <select name="operation"
-                  id="operation">
+                  id="operation"
+                  data-testid="operation"
+          >
             <option value="+">+</option>
             <option value="-">-</option>
             <option value="x">x</option>
@@ -32,7 +73,12 @@ function App() {
                  min="-10000"
                  max="10000"
           />
-          <input type="submit" name="equals" id="equals" value="="/>
+          <input type="submit"
+                 name="equals"
+                 id="equals"
+                 data-testid="equals"
+                 value="="
+          />
         </fieldset>
       </form>
     </main>
