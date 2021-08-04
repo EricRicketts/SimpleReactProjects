@@ -3,16 +3,16 @@ import App from './App';
 
 describe('Test Arithmetic Calculator', function () {
   let expected, results, firstInput, secondInput, operation, form, result;
-  describe('Initialization And Basic Operation', function () {
-    beforeEach(() => {
-      render(<App />);
-      firstInput = screen.getByTestId('firstNumber');
-      secondInput = screen.getByTestId('secondNumber');
-      operation = screen.getByTestId('operation');
-      form = screen.getByTestId('arithmeticForm');
-      result = screen.getByTestId('result');
-    });
+  beforeEach(() => {
+    render(<App />);
+    firstInput = screen.getByTestId('firstNumber');
+    secondInput = screen.getByTestId('secondNumber');
+    operation = screen.getByTestId('operation');
+    form = screen.getByTestId('arithmeticForm');
+    result = screen.getByTestId('result');
+  });
 
+  describe('Initialization And Basic Operation', function () {
     test('initialization',function () {
       expected = ['', '', 'Result: '];
       results = [firstInput.value, secondInput.value, result.textContent];

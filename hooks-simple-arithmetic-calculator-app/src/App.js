@@ -48,14 +48,15 @@ function App() {
       <p data-testid="result">Result: {result}</p>
       <form data-testid="arithmeticForm" onSubmit={onSubmitHandler}>
         <fieldset>
-          <input type="text"
+          <input type="number"
                  name="firstNumber"
                  id="firstNumber"
                  data-testid="firstNumber"
                  className="numberInput"
-                 placeholder="0"
-                 min="-10000"
-                 max="10000"
+                 placeholder={0}
+                 required
+                 min={-10000}
+                 max={10000}
           />
           <select name="operation"
                   id="operation"
@@ -66,14 +67,15 @@ function App() {
             <option value="x">x</option>
             <option value="/">/</option>
           </select>
-          <input type="text"
+          <input type="number"
                  name="secondNumber"
                  id="secondNumber"
                  data-testid="secondNumber"
                  className="numberInput"
-                 placeholder="0"
-                 min="-10000"
-                 max="10000"
+                 placeholder={0}
+                 required
+                 min={-10000}
+                 max={10000}
           />
           <input type="submit"
                  name="equals"
