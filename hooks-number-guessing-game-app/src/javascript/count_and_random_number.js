@@ -1,14 +1,26 @@
 import { randomNumberFromInterval } from "./random_number_from_interval";
 
-let randomNumber, count;
-function incrementCount() {
-  count = count + 1;
-}
-function resetCount() {
-  count = 0;
-}
-function initializeRandomNumber() {
-  randomNumber = randomNumberFromInterval(1, 100);
+let randomNumberAndCountObj = { count: undefined, randomNumber: undefined };
+
+function getCount() {
+  return randomNumberAndCountObj.count;
 }
 
-export { randomNumber, initializeRandomNumber, count, incrementCount, resetCount };
+function getRandomNumber() {
+  return randomNumberAndCountObj.randomNumber;
+}
+
+function incrementCount() {
+  randomNumberAndCountObj.count += 1;
+}
+
+function initializeRandomNumber() {
+  randomNumberAndCountObj.randomNumber = randomNumberFromInterval(1, 100);
+}
+
+function initializeCount() {
+  randomNumberAndCountObj.count = 0;
+}
+
+
+export { getCount, getRandomNumber, initializeCount, initializeRandomNumber, incrementCount };

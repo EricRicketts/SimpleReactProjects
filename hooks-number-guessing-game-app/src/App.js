@@ -2,14 +2,14 @@ import React from 'react';
 import { guessResultText } from './javascript/guess_result_text'
 import { GuessResultParagraph } from "./javascript/guess_result_paragraph";
 import { GuessNumberForm } from "./javascript/guess_number_form";
-import { randomNumber, count, incrementCount, resetCount, initializeRandomNumber }
+import { getCount, getRandomNumber, initializeCount,  initializeRandomNumber, incrementCount }
   from "./javascript/count_and_random_number";
 import './App.css';
 
 function App() {
   const [guess, setGuess] = React.useState('');
   React.useEffect(() => {
-    resetCount();
+    initializeCount();
     initializeRandomNumber();
   }, []);
 
@@ -29,7 +29,7 @@ function App() {
 
   function newGame(event) {
     event.preventDefault();
-    resetCount();
+    initializeCount();
     initializeRandomNumber();
     event.target.previousElementSibling.reset();
     setGuess('');
@@ -39,11 +39,11 @@ function App() {
     <main>
       <h1>Number Guess Game</h1>
       <GuessResultParagraph
-        guessResultMessage={guessResultText(guess, randomNumber, count)}
+        guessResultMessage={guessResultText(guess, getRandomNumber(), getCount())}
       />
       <GuessNumberForm
         onGuessSubmit={handleGuessSubmit}
-        onGameOver={guess === randomNumber}
+        onGameOver={guess === getRandomNumber()}
       />
       <button onClick={newGame}>New Game</button>
     </main>
