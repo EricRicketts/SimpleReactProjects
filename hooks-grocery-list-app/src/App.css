@@ -1,0 +1,117 @@
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+main {
+  width: 20%;
+  margin: 0 auto;
+  border: 20px solid #6FE86B;
+  padding: 10px 10px;
+}
+
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+form > h2, fieldset > label {
+  color: #3B9C38;
+  margin-bottom: 5px;
+}
+
+form > h2 {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+fieldset > label {
+  font-weight: 300;
+}
+
+fieldset > input[type="text"], fieldset > input[type="number"] {
+  margin-bottom: 5px;
+  border: 1px solid #cecece;
+  padding: 5px;
+  font-size: 1.5em;
+}
+
+fieldset > input[type="text"] {
+  width: 100%;
+}
+
+fieldset > input[type="number"] {
+  width: 10%;
+}
+
+label, input[type="submit"] {
+  display: block;
+}
+
+input[type="submit"] {
+  background-color: #8F1527;
+  color: white;
+  width: 90%;
+  border: none;
+  border-radius: 10px;
+  margin: 20px auto 20px auto;
+  font-size: 1em;
+  font-weight: 700;
+  height: 40px;
+}
+
+.listContainer {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.listTitle {
+  color: #8F1527;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.listContainer > h2 {
+  font-size: 2em;
+}
+
+.list {
+  list-style-type: disc;
+  color: #3B9C38;
+  margin: 0 20%;
+}
+
+.list > li {
+  border-bottom: 1px solid #cecece;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.list > li:last-child {
+  border: none;
+}
