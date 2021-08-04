@@ -3,7 +3,7 @@ import App from './App';
 
 describe('Test Arithmetic Calculator', function () {
   let expected, results, firstInput, secondInput, operation, form, result;
-  describe('Basic Operation', function () {
+  describe('Initialization And Basic Operation', function () {
     beforeEach(() => {
       render(<App />);
       firstInput = screen.getByTestId('firstNumber');
@@ -11,6 +11,12 @@ describe('Test Arithmetic Calculator', function () {
       operation = screen.getByTestId('operation');
       form = screen.getByTestId('arithmeticForm');
       result = screen.getByTestId('result');
+    });
+
+    test('initialization',function () {
+      expected = ['', '', 'Result: '];
+      results = [firstInput.value, secondInput.value, result.textContent];
+      expect(results).toEqual(expected);
     });
 
     test("addition", function () {
