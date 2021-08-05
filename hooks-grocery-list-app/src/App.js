@@ -12,6 +12,7 @@ function App() {
     let quantityAndItemString = `${formData.get('quantity')} ${formData.get('item')}`;
     setItems(items => [...items, quantityAndItemString]);
   }
+
   return (
     <main>
       <form onSubmit={onSubmitHandler} data-testid="groceryForm">
