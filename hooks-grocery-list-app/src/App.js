@@ -24,6 +24,7 @@ function App() {
                  name="item"
                  data-testid="item"
                  placeholder="Item Description"
+                 required
           />
           <label htmlFor="quantity">Quantity</label>
           <input type="number"
@@ -31,6 +32,7 @@ function App() {
                  name="quantity"
                  data-testid="quantity"
                  placeholder="1"
+                 required
                  min={1}
                  max={100}
           />

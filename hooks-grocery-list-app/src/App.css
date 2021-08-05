@@ -65,7 +65,7 @@ fieldset > input[type="text"] {
 }
 
 fieldset > input[type="number"] {
-  width: 10%;
+  width: 75px;
 }
 
 label, input[type="submit"] {
