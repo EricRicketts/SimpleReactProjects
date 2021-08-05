@@ -7,21 +7,21 @@ export function SelectionFilter(props) {
   }
 
   function classificationsHandler(event) {
-  event.preventDefault();
-  props.onAnimalsChange(event.target.value);
+    event.preventDefault();
+    props.onAnimalsChange(event.target.value);
 }
 
-function onSubmitHandler(event) {
-  event.preventDefault();
-  this.props.onClear(true);
-}
+  function onSubmitHandler(event) {
+    event.preventDefault();
+    this.props.onClear(true);
+  }
 
 return (
   <form onSubmit={onSubmitHandler} className={props.className}>
     <fieldset>
-      <select name="classification"
-              id="classification"
-              data-testid="classification"
+      <select name="classifications"
+              id="classifications"
+              data-testid="classifications"
               onChange={classificationsHandler}
       >
         {props.classifications.map((classification, index) =>
