@@ -25,10 +25,20 @@ function App(props) {
     return classifications;
   }
 
-  function onClassificationsChangeHandler(chosenClassification) {
+  function onAnimalsChangeHandler(selectedAnimal) {
     const dataSetNoTitles = props.dataSet.slice(1);
-    const classificationAndAnimals = dataSetNoTitles.find(obj => Object.keys(obj)[0] === chosenClassification);
-    setAnimals(classificationAndAnimals[chosenClassification]);
+    const allClassificationsForSelectedAnimal = dataSetNoTitles.reduce((allClassifications, obj) => {
+      const [currentClassification, currentAnimals] = Object.entries(obj).flat();
+      if (currentAnimals.includes(selectedAnimal)) allClassifications.push(currentClassification);
+      return allClassifications;
+    }, []).sort();
+    setClassifications(allClassificationsForSelectedAnimal);
+  }
+
+  function onClassificationsChangeHandler(selectedClassification) {
+    const dataSetNoTitles = props.dataSet.slice(1);
+    const allAnimalsForSelectedClassification = dataSetNoTitles.find(obj => Object.keys(obj)[0] === selectedClassification);
+    setAnimals(allAnimalsForSelectedClassification[selectedClassification].sort());
   }
 
   return (
@@ -37,7 +47,7 @@ function App(props) {
                        classifications={classifications}
                        animals={animals}
                        onClassificationsChange={onClassificationsChangeHandler}
-                       onAnimalsChange={() => {}}
+                       onAnimalsChange={onAnimalsChangeHandler}
                        onClear={() => {}}
       />
     </main>

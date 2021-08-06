@@ -30,9 +30,23 @@ describe('Test Selection Filter', function () {
   });
 
   test('select Cold-blooded', function () {
-    expected = ['Turtle', 'Salmon'];
+    expected = ['Salmon', 'Turtle'];
     userEvent.selectOptions(classifications, ['Cold-blooded']);
     animalsOptionsValues = Array.from(animals).map(option => option.value);
     expect(animalsOptionsValues).toEqual(expected);
+  });
+
+  test('select Bear', function () {
+    expected = ['Mammal', 'Vertebrate', 'Warm-blooded'];
+    userEvent.selectOptions(animals, ['Bear']);
+    classificationsOptionsValues = Array.from(classifications).map(option => option.value);
+    expect(classificationsOptionsValues).toEqual(expected);
+  });
+
+  test('select Salmon', function () {
+    expected = ['Cold-blooded', 'Vertebrate'];
+    userEvent.selectOptions(animals, ['Salmon']);
+    classificationsOptionsValues = Array.from(classifications).map(option => option.value);
+    expect(classificationsOptionsValues).toEqual(expected);
   });
 });
