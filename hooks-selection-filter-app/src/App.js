@@ -4,13 +4,12 @@ import { SelectionFilter } from "./components/selection_filter";
 import './App.css';
 
 function App(props) {
-  const dataSet = props.dataSet;
   const [classifications, setClassifications] = React.useState(() => clearClassifications());
   const [animals, setAnimals] = React.useState(() => clearAnimals());
 
   function clearAnimals() {
-    const animalsTitle = dataSet[0].Titles[1];
-    let allAnimals = dataSet.map(obj => Object.values(obj)).slice(1).flat(2);
+    const animalsTitle = props.dataSet[0].Titles[1];
+    let allAnimals = props.dataSet.map(obj => Object.values(obj)).slice(1).flat(2);
     let uniqueAnimals = allAnimals.reduce((unique, animal) => {
       if (!unique.includes(animal)) unique.push(animal);
       return unique;
@@ -20,10 +19,16 @@ function App(props) {
   }
 
   function clearClassifications() {
-    const classificationsTitle = dataSet[0].Titles[0];
-    let classifications = dataSet.map(obj => Object.keys(obj)).flat().slice(1).sort();
+    const classificationsTitle = props.dataSet[0].Titles[0];
+    let classifications = props.dataSet.map(obj => Object.keys(obj)).flat().slice(1).sort();
     classifications.unshift(classificationsTitle);
     return classifications;
+  }
+
+  function onClassificationsChangeHandler(chosenClassification) {
+    const dataSetNoTitles = props.dataSet.slice(1);
+    const classificationAndAnimals = dataSetNoTitles.find(obj => Object.keys(obj)[0] === chosenClassification);
+    setAnimals(classificationAndAnimals[chosenClassification]);
   }
 
   return (
@@ -31,7 +36,7 @@ function App(props) {
       <SelectionFilter className="selectionFilter"
                        classifications={classifications}
                        animals={animals}
-                       onClassificationsChange={() => {}}
+                       onClassificationsChange={onClassificationsChangeHandler}
                        onAnimalsChange={() => {}}
                        onClear={() => {}}
       />
