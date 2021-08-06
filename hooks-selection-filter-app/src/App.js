@@ -41,14 +41,18 @@ function App(props) {
     setAnimals(allAnimalsForSelectedClassification[selectedClassification].sort());
   }
 
+  function onClearHandler() {
+    setClassifications(clearClassifications());
+    setAnimals(clearAnimals());
+  }
+
   return (
     <main>
-      <SelectionFilter className="selectionFilter"
-                       classifications={classifications}
+      <SelectionFilter classifications={classifications}
                        animals={animals}
                        onClassificationsChange={onClassificationsChangeHandler}
                        onAnimalsChange={onAnimalsChangeHandler}
-                       onClear={() => {}}
+                       onClear={onClearHandler}
       />
     </main>
   );

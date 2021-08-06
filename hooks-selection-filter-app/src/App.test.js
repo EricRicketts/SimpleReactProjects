@@ -49,4 +49,18 @@ describe('Test Selection Filter', function () {
     classificationsOptionsValues = Array.from(classifications).map(option => option.value);
     expect(classificationsOptionsValues).toEqual(expected);
   });
+
+  test('clear both lists', function () {
+    expected = [
+      ['Classification', 'Bird', 'Cold-blooded', 'Mammal', 'Vertebrate', 'Warm-blooded'],
+      ['Animals', 'Bear', 'Ostrich', 'Salmon', 'Turtle', 'Whale']
+    ];
+    userEvent.selectOptions(animals, ['Ostrich']);
+    let selectionFilter = screen.getByTestId('selectionFilter');
+    fireEvent.submit(selectionFilter);
+    classificationsOptionsValues = Array.from(classifications).map(option => option.value);
+    animalsOptionsValues = Array.from(animals).map(option => option.value);
+    results = [classificationsOptionsValues, animalsOptionsValues];
+    expect(results).toEqual(expected)
+  });
 });

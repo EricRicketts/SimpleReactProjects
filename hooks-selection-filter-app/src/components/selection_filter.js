@@ -13,11 +13,11 @@ export function SelectionFilter(props) {
 
   function onSubmitHandler(event) {
     event.preventDefault();
-    this.props.onClear(true);
+    props.onClear();
   }
 
 return (
-  <form onSubmit={onSubmitHandler} className={props.className}>
+  <form onSubmit={onSubmitHandler} data-testid="selectionFilter">
     <fieldset>
       <select name="classifications"
               id="classifications"
