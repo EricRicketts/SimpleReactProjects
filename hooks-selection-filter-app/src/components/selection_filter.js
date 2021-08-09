@@ -3,17 +3,17 @@ import React from 'react';
 export function SelectionFilter(props) {
   function animalsHandler(event) {
     event.preventDefault();
-    props.onAnimalsChange(event.target.value);
+    props.onAnimalsChange(event);
   }
 
   function classificationsHandler(event) {
     event.preventDefault();
-    props.onClassificationsChange(event.target.value);
+    props.onClassificationsChange(event);
 }
 
   function onSubmitHandler(event) {
     event.preventDefault();
-    props.onClear();
+    props.onClear(event);
   }
 
 return (

@@ -1,12 +1,11 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
-import { classificationsAndAnimals } from "./javascript/data";
 import App from './App';
 
 describe('Test Selection Filter', function () {
   let expected, results, classifications, animals, classificationsOptionsValues, animalsOptionsValues;
   beforeEach(() => {
-    render(<App dataSet={classificationsAndAnimals}/>)
+    render(<App />)
     classifications = screen.getByTestId('classifications');
     animals = screen.getByTestId('animals');
   });
