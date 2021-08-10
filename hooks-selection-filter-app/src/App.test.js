@@ -37,31 +37,47 @@ describe('Test Selection Filter', function () {
     expect(results).toEqual(expected);
   });
 
-  test.skip('select Bear', function () {
-    expected = ['Mammal', 'Vertebrate', 'Warm-blooded'];
+  test('select Bear', function () {
+    expected = ['Mammal', 'Vertebrate', 'Warm-blooded', 'Bear'];
     userEvent.selectOptions(animals, ['Bear']);
     classificationsOptionsValues = Array.from(classifications).map(option => option.value);
-    expect(classificationsOptionsValues).toEqual(expected);
+    results = [...classificationsOptionsValues, animals.value]
+    expect(results).toEqual(expected);
   });
 
-  test.skip('select Salmon', function () {
-    expected = ['Cold-blooded', 'Vertebrate'];
+  test('select Salmon', function () {
+    expected = ['Cold-blooded', 'Vertebrate', 'Salmon'];
     userEvent.selectOptions(animals, ['Salmon']);
     classificationsOptionsValues = Array.from(classifications).map(option => option.value);
-    expect(classificationsOptionsValues).toEqual(expected);
+    results = [...classificationsOptionsValues, animals.value]
+    expect(results).toEqual(expected);
   });
 
-  test.skip('clear both lists when first selecting an animal', function () {
+  test('clear both lists when first selecting an animal', function () {
     expected = [
-      ['Classification', 'Bird', 'Cold-blooded', 'Mammal', 'Vertebrate', 'Warm-blooded'],
-      ['Animals', 'Bear', 'Ostrich', 'Salmon', 'Turtle', 'Whale'], 'Classification'
+      'Classification', 'Bird', 'Cold-blooded', 'Mammal', 'Vertebrate', 'Warm-blooded',
+      'Animals', 'Bear', 'Ostrich', 'Salmon', 'Turtle', 'Whale', 'Classification', 'Animals'
     ];
     userEvent.selectOptions(animals, ['Ostrich']);
     let selectionFilter = screen.getByTestId('selectionFilter');
     fireEvent.submit(selectionFilter);
     classificationsOptionsValues = Array.from(classifications).map(option => option.value);
     animalsOptionsValues = Array.from(animals).map(option => option.value);
-    results = [classificationsOptionsValues, animalsOptionsValues, classifications.value];
+    results = [...classificationsOptionsValues, ...animalsOptionsValues, classifications.value, animals.value];
+    expect(results).toEqual(expected)
+  });
+
+  test('clear both lists when first selecting a classification', function () {
+    expected = [
+      'Classification', 'Bird', 'Cold-blooded', 'Mammal', 'Vertebrate', 'Warm-blooded',
+      'Animals', 'Bear', 'Ostrich', 'Salmon', 'Turtle', 'Whale', 'Classification', 'Animals'
+    ];
+    userEvent.selectOptions(classifications, ['Mammal']);
+    let selectionFilter = screen.getByTestId('selectionFilter');
+    fireEvent.submit(selectionFilter);
+    classificationsOptionsValues = Array.from(classifications).map(option => option.value);
+    animalsOptionsValues = Array.from(animals).map(option => option.value);
+    results = [...classificationsOptionsValues, ...animalsOptionsValues, classifications.value, animals.value];
     expect(results).toEqual(expected)
   });
 });
