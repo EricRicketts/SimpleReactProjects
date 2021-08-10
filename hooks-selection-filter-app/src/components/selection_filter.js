@@ -9,7 +9,7 @@ export function SelectionFilter(props) {
   function classificationsHandler(event) {
     event.preventDefault();
     props.onClassificationsChange(event);
-}
+  }
 
   function onSubmitHandler(event) {
     event.preventDefault();
@@ -22,18 +22,22 @@ return (
       <select name="classifications"
               id="classifications"
               data-testid="classifications"
+              value={props.classification}
               onChange={classificationsHandler}
       >
-        {props.classifications.map((classification, index) =>
-          <option key={index} value={classification}>{classification}</option>)}
+        {props.classificationOptions.map((classification, index) =>
+          <option key={index} value={classification}>{classification}</option>)
+        }
       </select>
       <select name="animals"
               id="animals"
               data-testid="animals"
+              value={props.animal}
               onChange={animalsHandler}
       >
-        {props.animals.map((animal, index) =>
-          <option key={index} value={animal}>{animal}</option>)}
+        {props.animalOptions.map((animal, index) =>
+          <option key={index} value={animal}>{animal}</option>)
+        }
       </select>
       <input type="submit"
              value="Clear"

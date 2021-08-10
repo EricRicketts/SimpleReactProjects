@@ -5,8 +5,10 @@ import './App.css';
 
 function App() {
   const dataSet = classificationsAndAnimals;
-  const [classifications, setClassifications] = React.useState(() => clearClassifications());
-  const [animals, setAnimals] = React.useState(() => clearAnimals());
+  const [classification, setClassification] = React.useState('Classification');
+  const [animal, setAnimal] = React.useState('Animals');
+  const [allClassifications, setAllClassifications] = React.useState(() => clearClassifications())
+  const [allAnimals, setAllAnimals] = React.useState(() => clearAnimals());
 
   function clearAnimals() {
     const animalsTitle = dataSet[0].Titles[1];
@@ -46,18 +48,23 @@ function App() {
   }
 
   function onAnimalsChangeHandler(event) {
-    let selectElement = event.target;
+    let animalSelect = event.target;
     let selectedAnimal = event.target.value;
-
-    clearSelectElement(selectElement);
     const dataSetNoTitles = dataSet.slice(1);
 
-    const allClassificationsForSelectedAnimal = dataSetNoTitles.reduce((allClassifications, obj) => {
-      const [currentClassification, currentAnimals] = Object.entries(obj).flat();
+    setAnimal(selectedAnimal);
+    let filteredAnimalSelectOptions = Array.from(animalSelect.options).reduce((filteredOptions, option) => {
+      if (option.value !== 'Animals') filteredOptions.push(option.value);
+      return filteredOptions;
+    }, []).sort();
+    setAllAnimals(filteredAnimalSelectOptions);
+
+    const allClassificationsForSelectedAnimal = dataSetNoTitles.reduce((allClassifications, currentClassificationAndAnimals) => {
+      const [currentClassification, currentAnimals] = Object.entries(currentClassificationAndAnimals).flat();
       if (currentAnimals.includes(selectedAnimal)) allClassifications.push(currentClassification);
       return allClassifications;
     }, []).sort();
-    setClassifications(allClassificationsForSelectedAnimal);
+    setAllClassifications(allClassificationsForSelectedAnimal);
   }
 
   function onClassificationsChangeHandler(event) {
@@ -65,27 +72,32 @@ function App() {
     let selectedClassification = event.target.value;
     const dataSetNoTitles = dataSet.slice(1);
 
+    setClassification(selectedClassification);
     let filteredClassificationSelectOptions = Array.from(classificationSelect.options).reduce((filteredOptions, option) => {
       if (option.value !== 'Classification') filteredOptions.push(option.value);
       return filteredOptions;
     }, []).sort();
-    setClassifications(filteredClassificationSelectOptions);
-    
+    setAllClassifications(filteredClassificationSelectOptions);
+
     const allAnimalsForSelectedClassification = dataSetNoTitles.find(currentClassificationAndItsAnimals => {
       return Object.keys(currentClassificationAndItsAnimals)[0] === selectedClassification;
     });
-    setAnimals(allAnimalsForSelectedClassification[selectedClassification].sort());
+    setAllAnimals(allAnimalsForSelectedClassification[selectedClassification].sort());
   }
 
   function onClearHandler(event) {
-    setClassifications(() => clearClassifications());
-    setAnimals( () => clearAnimals());
+    setClassification('Classification');
+    setAnimal('Animals');
+    setAllClassifications(() => clearClassifications());
+    setAllAnimals( () => clearAnimals());
   }
 
   return (
     <main>
-      <SelectionFilter classifications={classifications}
-                       animals={animals}
+      <SelectionFilter classification={classification}
+                       animal={animal}
+                       classificationOptions={allClassifications}
+                       animalOptions={allAnimals}
                        onClassificationsChange={onClassificationsChangeHandler}
                        onAnimalsChange={onAnimalsChangeHandler}
                        onClear={onClearHandler}
