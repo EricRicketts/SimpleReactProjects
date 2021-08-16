@@ -5,9 +5,7 @@ import './App.css';
 
 function App() {
   const dataSet = classificationsAndAnimals;
-  // const [classification, setClassification] = React.useState('Classification');
   const [classification, setClassification] = React.useState(dataSet[0].Titles[0]);
-  // const [animal, setAnimal] = React.useState('Animals');
   const [animal, setAnimal] = React.useState(dataSet[0].Titles[1]);
   const [allClassifications, setAllClassifications] = React.useState(() => clearClassifications())
   const [allAnimals, setAllAnimals] = React.useState(() => clearAnimals());
@@ -40,13 +38,6 @@ function App() {
     });
     allClassifications.sort().unshift(classificationsTitle);
     return allClassifications;
-  }
-
-  function clearSelectElement(selectElement) {
-    let numberOfOptions = selectElement.options.length;
-    for (let i = numberOfOptions - 1; i >= 0; i -= 1) {
-      selectElement.options[i] = null;
-    }
   }
 
   function onAnimalsChangeHandler(event) {
