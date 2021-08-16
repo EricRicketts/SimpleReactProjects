@@ -5,10 +5,8 @@ import './App.css';
 
 function App() {
   const dataSet = classificationsAndAnimals;
-  const [classification, setClassification] = React.useState(dataSet[0].Titles[0]);
-  const [animal, setAnimal] = React.useState(dataSet[0].Titles[1]);
-  const [allClassifications, setAllClassifications] = React.useState(() => clearClassifications())
-  const [allAnimals, setAllAnimals] = React.useState(() => clearAnimals());
+  const [classifications, setClassifications] = React.useState(clearClassifications());
+  const [animals, setAnimals] = React.useState(clearAnimals());
 
   function clearAnimals() {
     const animalsTitle = dataSet[0].Titles[1];
@@ -41,56 +39,55 @@ function App() {
   }
 
   function onAnimalsChangeHandler(event) {
-    let animalSelect = event.target;
+    let animalSelectElementOptions = Array.from(event.target.options);
     let selectedAnimal = event.target.value;
+    let animalSelectElementOptionsValues = animalSelectElementOptions
+      .map(option => option.value)
+      .filter(value => value !== 'Animals' || value !== selectedAnimal)
+      .sort();
     const dataSetNoTitles = dataSet.slice(1);
 
-    setAnimal(selectedAnimal);
-    let filteredAnimalSelectOptions = Array.from(animalSelect.options).reduce((filteredOptions, option) => {
-      if (option.value !== 'Animals') filteredOptions.push(option.value);
-      return filteredOptions;
-    }, []).sort();
-    setAllAnimals(filteredAnimalSelectOptions);
+    // let filteredAnimalSelectOptions = Array.from(animalSelect.options).reduce((filteredOptions, option) => {
+    //   if (option.value !== 'Animals') filteredOptions.push(option.value);
+    //   return filteredOptions;
+    // }, []).sort();
+    setAnimals([selectedAnimal].concat(animalSelectElementOptionsValues));
 
-    const allClassificationsForSelectedAnimal = dataSetNoTitles.reduce((allClassifications, currentClassificationAndAnimals) => {
-      const [currentClassification, currentAnimals] = Object.entries(currentClassificationAndAnimals).flat();
-      if (currentAnimals.includes(selectedAnimal)) allClassifications.push(currentClassification);
-      return allClassifications;
-    }, []).sort();
-    setAllClassifications(allClassificationsForSelectedAnimal);
+    const classificationsForSelectedAnimal = dataSetNoTitles
+      .reduce((allClassifications, currentClassificationAndAnimals) => {
+        const [currentClassification, currentAnimals] = Object.entries(currentClassificationAndAnimals).flat();
+        if (currentAnimals.includes(selectedAnimal)) allClassifications.push(currentClassification);
+        return allClassifications;
+      }, []).sort();
+    setClassifications(classificationsForSelectedAnimal);
   }
 
   function onClassificationsChangeHandler(event) {
-    let classificationSelect = event.target;
+    let classificationSelectElementOptions = Array.from(event.target.options);
     let selectedClassification = event.target.value;
+    let classificationSelectElementOptionsValues = classificationSelectElementOptions
+      .map(option => option.value)
+      .filter(value => value !== 'Classification' || value !== selectedClassification)
+      .sort();
     const dataSetNoTitles = dataSet.slice(1);
 
-    setClassification(selectedClassification);
-    let filteredClassificationSelectOptions = Array.from(classificationSelect.options).reduce((filteredOptions, option) => {
-      if (option.value !== 'Classification') filteredOptions.push(option.value);
-      return filteredOptions;
-    }, []).sort();
-    setAllClassifications(filteredClassificationSelectOptions);
+    setClassifications([selectedClassification].concat(classificationSelectElementOptionsValues));
 
-    const allAnimalsForSelectedClassification = dataSetNoTitles.find(currentClassificationAndItsAnimals => {
+    const animalsForSelectedClassification = dataSetNoTitles.find(currentClassificationAndItsAnimals => {
       return Object.keys(currentClassificationAndItsAnimals)[0] === selectedClassification;
     });
-    setAllAnimals(allAnimalsForSelectedClassification[selectedClassification].sort());
+    setAnimals(animalsForSelectedClassification[selectedClassification].sort());
   }
 
   function onClearHandler(event) {
-    setClassification('Classification');
-    setAnimal('Animals');
-    setAllClassifications(() => clearClassifications());
-    setAllAnimals( () => clearAnimals());
+    setClassifications(clearClassifications());
+    setAnimals(clearAnimals());
   }
 
   return (
     <main>
-      <SelectionFilter classification={classification}
-                       animal={animal}
-                       classificationOptions={allClassifications}
-                       animalOptions={allAnimals}
+      <SelectionFilter classifications={classifications}
+                       animals={animals}
                        onClassificationsChange={onClassificationsChangeHandler}
                        onAnimalsChange={onAnimalsChangeHandler}
                        onClear={onClearHandler}

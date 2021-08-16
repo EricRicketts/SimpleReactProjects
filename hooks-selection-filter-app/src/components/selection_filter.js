@@ -16,33 +16,32 @@ export function SelectionFilter(props) {
     props.onClear(event);
   }
 
-return (
-  <form onSubmit={onSubmitHandler} data-testid="selectionFilter">
-    <fieldset>
-      <select name="classifications"
-              id="classifications"
-              data-testid="classifications"
-              value={props.classification}
-              onChange={classificationsHandler}
-      >
-        {props.classificationOptions.map((classification, index) =>
-          <option key={index} value={classification}>{classification}</option>)
-        }
-      </select>
-      <select name="animals"
-              id="animals"
-              data-testid="animals"
-              value={props.animal}
-              onChange={animalsHandler}
-      >
-        {props.animalOptions.map((animal, index) =>
-          <option key={index} value={animal}>{animal}</option>)
-        }
-      </select>
-      <input type="submit"
-             value="Clear"
-      />
-    </fieldset>
-  </form>
+  return (
+    <form onSubmit={onSubmitHandler} data-testid="selectionFilter">
+      <fieldset>
+        <select name="classifications"
+                id="classifications"
+                data-testid="classifications"
+                value={props.classifications[0]}
+                onChange={classificationsHandler}
+        >
+          {
+            props.classifications.map((classification, index) =>
+              <option key={index} value={classification}>{classification}</option>)
+          }
+        </select>
+        <select name="animals"
+                id="animals"
+                data-testid="animals"
+                value={props.animals[0]}
+                onChange={animalsHandler}
+        >
+          {props.animals.map((animal, index) => <option key={index} value={animal}>{animal}</option>)}
+        </select>
+        <input type="submit"
+               value="Clear"
+        />
+      </fieldset>
+    </form>
   );
 }
