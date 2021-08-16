@@ -17,9 +17,9 @@ export function GuessNumberForm(props) {
         />
         <input type="submit"
                value="Guess"
-               className={props.onGameOver ? 'inactive' : 'active'}
+               className={props.isGameOver ? 'inactive' : 'active'}
                data-testid="input-submit"
-               disabled={props.onGameOver}
+               disabled={props.isGameOver}
         />
       </fieldset>
     </form> 

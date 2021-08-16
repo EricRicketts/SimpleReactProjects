@@ -1,16 +1,13 @@
 import React from 'react';
+import { randomNumberFromInterval } from "./javascript/random_number_from_interval";
 import { GuessResultParagraph } from "./javascript/guess_result_paragraph";
 import { GuessNumberForm } from "./javascript/guess_number_form";
 import './App.css';
 
 function App() {
   const [guess, setGuess] = React.useState('');
-
-
-  React.useEffect(() => {
-    initializeCount();
-    initializeRandomNumber();
-  }, []);
+  const [count, setCount] = React.useState(0);
+  const [answer, setAnswer] = React.useState(randomNumberFromInterval(1, 100));
 
   function handleGuessSubmit(event) {
     const guessElement = event.target.elements.guess
@@ -23,26 +20,28 @@ function App() {
       guessElement.value = '';
       setGuess('');
     }
-    incrementCount();
+    setCount(count + 1)
   }
 
   function newGame(event) {
     event.preventDefault();
-    initializeCount();
-    initializeRandomNumber();
-    event.target.previousElementSibling.reset();
     setGuess('');
+    setCount(0);
+    setAnswer(randomNumberFromInterval(1, 100));
+    event.target.previousElementSibling.reset();
   }
 
   return (
     <main>
       <h1>Number Guess Game</h1>
       <GuessResultParagraph
-        guessResultMessage={guessResultText(guess, getRandomNumber(), getCount())}
+        guess={guess}
+        answer={answer}
+        count={count}
       />
       <GuessNumberForm
         onGuessSubmit={handleGuessSubmit}
-        onGameOver={guess === getRandomNumber()}
+        isGameOver={guess === answer}
       />
       <button onClick={newGame}>New Game</button>
     </main>

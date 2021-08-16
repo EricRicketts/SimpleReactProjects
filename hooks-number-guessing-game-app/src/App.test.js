@@ -52,7 +52,7 @@ describe('App Tests', function() {
       handleOnGuessSubmit = jest.fn();
       render(<GuessNumberForm
         onGuessSubmit={handleOnGuessSubmit}
-        onGameOver={false}
+        isGameOver={false}
       />);
       form = screen.getByTestId('form');
       inputSubmit = screen.getByTestId('input-submit');
@@ -72,7 +72,7 @@ describe('App Tests', function() {
     test('submit button disabled when game over', function() {
       const { container } = render(<GuessNumberForm
         onGuessSubmit={handleOnGuessSubmit}
-        onGameOver={true}
+        isGameOver={true}
       />);
       inputSubmit = container.querySelector('input[type=submit]')
       expected = ['inactive', true];
