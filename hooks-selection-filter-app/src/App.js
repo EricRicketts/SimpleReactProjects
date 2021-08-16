@@ -47,10 +47,6 @@ function App() {
       .sort();
     const dataSetNoTitles = dataSet.slice(1);
 
-    // let filteredAnimalSelectOptions = Array.from(animalSelect.options).reduce((filteredOptions, option) => {
-    //   if (option.value !== 'Animals') filteredOptions.push(option.value);
-    //   return filteredOptions;
-    // }, []).sort();
     setAnimals([selectedAnimal].concat(animalSelectElementOptionsValues));
 
     const classificationsForSelectedAnimal = dataSetNoTitles

@@ -53,31 +53,33 @@ describe('Test Selection Filter', function () {
     expect(results).toEqual(expected);
   });
 
-  test.skip('clear both lists when first selecting an animal', function () {
+  test('clear both lists when first selecting an animal', function () {
     expected = [
       'Classification', 'Bird', 'Cold-blooded', 'Mammal', 'Vertebrate', 'Warm-blooded',
       'Animals', 'Bear', 'Ostrich', 'Salmon', 'Turtle', 'Whale', 'Classification', 'Animals'
     ];
-    userEvent.selectOptions(animals, ['Ostrich']);
+    userEvent.selectOptions(animalSelect, ['Ostrich']);
     let selectionFilter = screen.getByTestId('selectionFilter');
     fireEvent.submit(selectionFilter);
-    classificationsOptionsValues = Array.from(classifications).map(option => option.value);
-    animalsOptionsValues = Array.from(animals).map(option => option.value);
-    results = [...classificationsOptionsValues, ...animalsOptionsValues, classifications.value, animals.value];
+    classificationOptionsValues = Array.from(classifications).map(option => option.value);
+    animalOptionsValues = Array.from(animals).map(option => option.value);
+    results = [...classificationOptionsValues, ...animalOptionsValues,
+      classificationSelect.value, animalSelect.value];
     expect(results).toEqual(expected)
   });
 
-  test.skip('clear both lists when first selecting a classification', function () {
+  test('clear both lists when first selecting a classification', function () {
     expected = [
       'Classification', 'Bird', 'Cold-blooded', 'Mammal', 'Vertebrate', 'Warm-blooded',
       'Animals', 'Bear', 'Ostrich', 'Salmon', 'Turtle', 'Whale', 'Classification', 'Animals'
     ];
-    userEvent.selectOptions(classifications, ['Mammal']);
+    userEvent.selectOptions(classificationSelect, ['Mammal']);
     let selectionFilter = screen.getByTestId('selectionFilter');
     fireEvent.submit(selectionFilter);
-    classificationsOptionsValues = Array.from(classifications).map(option => option.value);
-    animalsOptionsValues = Array.from(animals).map(option => option.value);
-    results = [...classificationsOptionsValues, ...animalsOptionsValues, classifications.value, animals.value];
+    classificationOptionsValues = Array.from(classificationSelect).map(option => option.value);
+    animalOptionsValues = Array.from(animalSelect).map(option => option.value);
+    results = [...classificationOptionsValues, ...animalOptionsValues,
+      classificationSelect.value, animalSelect.value];
     expect(results).toEqual(expected)
   });
 });
