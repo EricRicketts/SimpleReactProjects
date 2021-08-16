@@ -2,6 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { GuessResultParagraph } from './javascript/guess_result_paragraph';
 import { GuessNumberForm } from "./javascript/guess_number_form";
+import { playFullGame } from "./javascript/helpers";
 import App from './App';
 
 describe('App Tests', function() {
@@ -137,28 +138,8 @@ describe('App Tests', function() {
     });
 
     test('play a full game', function () {
-      let guess = 50;
-      let [maxGuess, minGuess] = [100, 1];
-      let gameOverFlag = false;
       let guessCount = 1;
-      inputGuessElement.value = guess.toString();
-      fireEvent.submit(form);
-      while (!gameOverFlag) {
-        if (resultsParagraph.textContent.includes('guessed')) {
-          gameOverFlag = true;
-        } else {
-          if (resultsParagraph.textContent.includes('is greater')) {
-            maxGuess = guess;
-            guess = Math.floor((guess + minGuess) / 2)
-          } else {
-            minGuess = guess
-            guess = Math.floor((guess + maxGuess) / 2);
-          }
-          guessCount += 1;
-          inputGuessElement.value = guess.toString();
-          fireEvent.submit(form);
-        }
-      }
+      guessCount = playFullGame(form, inputGuessElement, resultsParagraph, guessCount);
       expect(resultsParagraph.textContent).toBe(`You guessed it!!  It took ${guessCount} guesses.`);
     });
   });
