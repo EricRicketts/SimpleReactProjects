@@ -1,33 +1,48 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { guessResultText } from './javascript/guess_result_text';
 import { GuessResultParagraph } from './javascript/guess_result_paragraph';
 import { GuessNumberForm } from "./javascript/guess_number_form";
-import App from './App';
+// import App from './App';
 
 describe('App Tests', function() {
   let results, expected;
-  describe.skip('Guess Result Text', function () {
-    test('yields appropriate text on comparisons', function() {
-      let number = 50
-      let dataArray = [['', 0], [25, 7], [75, 7], [50, 7]]
-      results = [];
+  describe('Guess Result Paragraph', function () {
+    let dataArray, answer, guess, count;
+    beforeEach(() => {
+      answer = 50
+      dataArray = [['', 0], [25, 7], [75, 7], [50, 7]]
       expected = [
         'Guess an integer number from 1 to 100 inclusive.', '25 is less than the number.',
         '75 is greater than the number.', 'You guessed it!!  It took 7 guesses.'
       ];
-      dataArray.forEach(([guess, count]) => {
-        results.push(guessResultText(guess, number, count));
-      });
-      expect(results).toEqual(expected);
     });
-  });
 
-  describe('Guess Result Paragraph', function() {
-    test('renders a paragraph with text', function() {
-      render(<GuessResultParagraph guessResultMessage={guessResultText(25, 50, 7)}/>);
-      let resultParagraph = screen.getByText('25 is less than the number.', {selector: 'p'});
-      expect(resultParagraph).toBeInTheDocument();
+    test('initialization', function() {
+      [guess, count] = dataArray[0];
+      render(<GuessResultParagraph guess={guess} answer={answer} count={count} />);
+      results = screen.getByTestId('results').textContent;
+      expect(results).toEqual(expected[0]);
+    });
+
+    test('guess less than answer', function() {
+      [guess, count] = dataArray[1];
+      render(<GuessResultParagraph guess={guess} answer={answer} count={count} />);
+      results = screen.getByTestId('results').textContent;
+      expect(results).toEqual(expected[1]);
+    });
+
+    test('guess greater than answer', function() {
+      [guess, count] = dataArray[2];
+      render(<GuessResultParagraph guess={guess} answer={answer} count={count} />);
+      results = screen.getByTestId('results').textContent;
+      expect(results).toEqual(expected[2]);
+    });
+
+    test('guess equal to answer', function() {
+      [guess, count] = dataArray[3];
+      render(<GuessResultParagraph guess={guess} answer={answer} count={count} />);
+      results = screen.getByTestId('results').textContent;
+      expect(results).toEqual(expected[3]);
     });
   });
 
@@ -66,7 +81,7 @@ describe('App Tests', function() {
     });
   });
 
-  describe('Game Initialization', function() {
+  describe.skip('Game Initialization', function() {
     let inputGuess, inputSubmit, resultsParagraph;
     beforeEach(() => {
       render(<App/>);
@@ -90,7 +105,7 @@ describe('App Tests', function() {
     });
   });
 
-  describe('Game Play Edge Conditions And Full Game', function() {
+  describe.skip('Game Play Edge Conditions And Full Game', function() {
     let form, inputGuessElement, resultsParagraph, newGameButton;
     beforeEach(() => {
       render(<App />);
