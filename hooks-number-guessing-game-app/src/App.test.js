@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { GuessResultParagraph } from './javascript/guess_result_paragraph';
 import { GuessNumberForm } from "./javascript/guess_number_form";
-// import App from './App';
+import App from './App';
 
 describe('App Tests', function() {
   let results, expected;
@@ -81,7 +81,7 @@ describe('App Tests', function() {
     });
   });
 
-  describe.skip('Game Initialization', function() {
+  describe('Game Initialization', function() {
     let inputGuess, inputSubmit, resultsParagraph;
     beforeEach(() => {
       render(<App/>);
@@ -105,7 +105,7 @@ describe('App Tests', function() {
     });
   });
 
-  describe.skip('Game Play Edge Conditions And Full Game', function() {
+  describe('Game Play Edge Conditions And Full Game', function() {
     let form, inputGuessElement, resultsParagraph, newGameButton;
     beforeEach(() => {
       render(<App />);

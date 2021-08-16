@@ -1,7 +1,7 @@
 export function GuessResultParagraph( { guess, answer, count } ) {
   let guessResultText;
   switch (true) {
-    case guess === '' && (count >= 0 || !count): {
+    case guess === '': {
       guessResultText = 'Guess an integer number from 1 to 100 inclusive.'
       break;
     }
