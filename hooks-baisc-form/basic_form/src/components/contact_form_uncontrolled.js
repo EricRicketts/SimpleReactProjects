@@ -7,16 +7,14 @@ function ContactFormUncontrolled() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log("name: ", nameRef.current.value);
-    console.log("email: ", emailRef.current.value);
-    console.log("message: ", messageRef.current.value);
   }
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} data-testid="contactFormUncontrolled">
       <div>
         <label htmlFor="name">Name: </label>
         <input
           id="name"
+          data-testid="name"
           type="text"
           ref={nameRef}
         />
@@ -25,6 +23,7 @@ function ContactFormUncontrolled() {
         <label htmlFor="email">Email: </label>
         <input
           id="email"
+          data-testid="email"
           type="email"
           ref={emailRef}
         />
@@ -33,6 +32,7 @@ function ContactFormUncontrolled() {
         <label htmlFor="message">Message</label>
         <input
           id="message"
+          data-testid="message"
           ref={messageRef}
         />
       </div>

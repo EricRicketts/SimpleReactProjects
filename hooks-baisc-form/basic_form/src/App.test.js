@@ -1,5 +1,6 @@
 import {render, screen, fireEvent, cleanup} from '@testing-library/react';
 import {ContactFormControlled} from './components/contact_form_controlled';
+import {ContactFormUncontrolled} from './components/contact_form_uncontrolled';
 
 describe('Test Controlled Contact From', function() {
 
@@ -14,18 +15,24 @@ describe('Test Controlled Contact From', function() {
     ];
     labels.forEach(text => {
       expect(screen.getByText(text)).toBeInTheDocument();
-    })
+    });
   });
 
   test('Initial values are empty', function() {
     render(<ContactFormControlled />);
-    const name = screen.getByTestId('name');
-    expect(name.value).toBe('');
+    const ids = [
+      'name', 'email', 'message'
+    ];
+
+    ids.forEach(id => {
+      const element = screen.getByTestId(id);
+      expect(element.value).toBe('');
+    });
   });
 
-  test('Set all fields', function() {
+  test('Set all fields and submit', function() {
     render(<ContactFormControlled />);
-    const form = screen.getByTestId("contactForm");
+    const form = screen.getByTestId("contactFormControlled");
     const name = screen.getByTestId("name");
     name.value = 'Eric Ricketts';
     const email = screen.getByTestId('email')
@@ -40,5 +47,38 @@ describe('Test Controlled Contact From', function() {
     for (let index = 0; index < numberOfTestedElements; index++) {
       expect(form.elements[index].value).toBe(expected[index]);
     }
+  });
+});
+
+describe('Test Uncontrolled Contact From', function() {
+
+  afterEach(() => {
+    cleanup();
+  });
+
+  test('Initial rendering of uncontrolled form', function() {
+    render(<ContactFormUncontrolled />);
+    const labels = [
+      'Name:', 'Email:', 'Message'
+    ];
+    labels.forEach(text => {
+      expect(screen.getByText(text)).toBeInTheDocument();
+    });
+  });
+
+  test('Initial values are empty', function() {
+    render(<ContactFormUncontrolled />);
+    const ids = [
+      'name', 'email', 'message'
+    ];
+
+    ids.forEach(id => {
+      const element = screen.getByTestId(id);
+      expect(element.value).toBe('');
+    });
+  });
+
+  test('Set all fields and submit', function() {
+
   });
 });

@@ -10,7 +10,7 @@ function ContactFormControlled() {
   }
 
     return (
-        <form onSubmit={handleSubmit} data-testid="contactForm">
+        <form onSubmit={handleSubmit} data-testid="contactFormControlled">
             <div>
                 <label htmlFor="name">Name: </label>
                 <input
