@@ -7,17 +7,15 @@ function ContactFormControlled() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log('name: ', name);
-    console.log('email: ', email);
-    console.log('message: ', message);
   }
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} data-testid="contactForm">
             <div>
                 <label htmlFor="name">Name: </label>
                 <input
                   id="name"
+                  data-testid="name"
                   type="text"
                   value={name}
                   onChange={((e) => setName(e.target.value))}
@@ -27,6 +25,7 @@ function ContactFormControlled() {
                 <label htmlFor="email">Email: </label>
                 <input
                   id="email"
+                  data-testid="email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -36,11 +35,12 @@ function ContactFormControlled() {
                 <label htmlFor="message">Message</label>
                 <textarea
                   id="message"
+                  data-testid="message"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                 />
             </div>
-            <button type="submit">Submit</button>
+            <button data-testid="submitButton" type="submit">Submit</button>
         </form>
     );
 }
