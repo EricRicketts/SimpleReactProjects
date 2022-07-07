@@ -13,9 +13,9 @@ function BasicUsageForm() {
       {/* register your input into the hook by invoking the "register" function */}
       <label htmlFor="example">Example</label>
       <input
-        data-testid="example"
         name="example"
         id="example"
+        type="text"
         defaultValue="test"
         {...register("example")}
       />
@@ -23,15 +23,15 @@ function BasicUsageForm() {
       {/* include validation with required or other standard HTML validation rules */}
       <label htmlFor="exampleRequired">Example Required</label>
       <input
-        data-testid="exampleRequired"
         name="exampleRequired"
         id="exampleRequired"
+        type="text"
         {...register("exampleRequired", { required: true })}
       />
       {/* errors will return when field validation fails  */}
       {errors.exampleRequired && <span>This field is required</span>}
 
-      <input data-testid="submitInput" type="submit" />
+      <input type="submit" />
     </form>
   );
 }
