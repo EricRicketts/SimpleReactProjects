@@ -1,8 +1,12 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from './App';
+// import "@testing-library/jest-dom";
+import BasicUsageForm from './components/basic_usage_form';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+describe("Test the first react hook form example", function() {
+
+  test("Should render the basic fields", () => {
+    React.render(<BasicUsageForm />);
+    expect(screen.getByRole("textbox", { name: /example/i} )).toBeInTheDocument();
+  });
 });

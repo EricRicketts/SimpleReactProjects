@@ -1,4 +1,4 @@
-import { dataArray, BasicUsageForm } from "./components/basic_usage_form";
+import BasicUsageForm from "./components/basic_usage_form";
 
 function App() {
   return (
