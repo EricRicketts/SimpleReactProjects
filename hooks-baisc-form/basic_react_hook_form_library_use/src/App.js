@@ -1,11 +1,12 @@
 import BasicUsageForm from "./components/basic_usage_form";
+import { ChakraProvider } from "@chakra-ui/react";
 
 function App() {
 
   return (
-    <div className="App">
-      <BasicUsageForm />
-    </div>
+      <ChakraProvider>
+        <BasicUsageForm />
+      </ChakraProvider>
   );
 }
 

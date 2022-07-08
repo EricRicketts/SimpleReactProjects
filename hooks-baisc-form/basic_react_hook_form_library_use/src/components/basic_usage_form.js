@@ -1,8 +1,16 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import {useForm} from "react-hook-form";
+import {
+  Button,
+  Input,
+  FormControl,
+  FormLabel,
+  VStack,
+  Box
+} from '@chakra-ui/react';
 
 function BasicUsageForm() {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const {register, handleSubmit, watch, formState: {errors}} = useForm();
   const onSubmit = (data) => {
     console.log(data);
   }
@@ -12,28 +20,35 @@ function BasicUsageForm() {
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <form onSubmit={handleSubmit(onSubmit)}>
-      {/* register your input into the hook by invoking the "register" function */}
-      <label htmlFor="example">Example</label>
-      <input
-        name="example"
-        id="example"
-        type="text"
-        defaultValue="test"
-        {...register("example")}
-      />
+      <VStack align="left" width="50%" spacing="24px">
+        {/* register your input into the hook by invoking the "register" function */}
+        <FormControl>
+          <FormLabel htmlFor="example">Example</FormLabel>
+          <Input
+            name="example"
+            id="example"
+            type="text"
+            size="md"
+            defaultValue="test"
+            {...register("example")}
+          />
+        </FormControl>
 
-      {/* include validation with required or other standard HTML validation rules */}
-      <label htmlFor="exampleRequired">Example Required</label>
-      <input
-        name="exampleRequired"
-        id="exampleRequired"
-        type="text"
-        {...register("exampleRequired", { required: true })}
-      />
-      {/* errors will return when field validation fails  */}
-      {errors.exampleRequired && <span>This field is required</span>}
+        {/* include validation with required or other standard HTML validation rules */}
+        <FormControl>
+          <FormLabel htmlFor="exampleRequired">Example Required</FormLabel>
+          <Input
+            name="exampleRequired"
+            id="exampleRequired"
+            type="text"
+            {...register("exampleRequired", {required: true})}
+          />
+          {/* errors will return when field validation fails  */}
+          {errors.exampleRequired && <span>This field is required</span>}
+        </FormControl>
 
-      <input type="submit" />
+        <Button colorScheme="blue" size="md" type="submit">Submit</Button>
+      </VStack>
     </form>
   );
 }
