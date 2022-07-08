@@ -2,6 +2,7 @@ import React from 'react';
 import {fireEvent, render, screen} from '@testing-library/react';
 import "@testing-library/jest-dom";
 import BasicUsageForm from './components/basic_usage_form';
+import {act} from "react-dom/test-utils";
 
 describe("Test Basic Usage Form default render", function() {
 
@@ -36,15 +37,35 @@ describe("Test Basic Usage Form default render", function() {
   });
 });
 
-describe("Test Basic Usage From invalid inputs", function() {
+describe("Test Basic Usage Form invalid inputs", function() {
 
-  test("Should add error text if example required field is not filled out", async function() {
+  test("Should add error text if example required field is not filled out", async function () {
     render(<BasicUsageForm/>);
     fireEvent.submit(screen.getByRole("button"));
     expect(await screen.findByText("This field is required")).toBeInTheDocument();
   });
+});
 
-  test('Should submit the form if there are no error', async function() {
+describe("Test Basic Usage Form submission", function() {
 
+  test('Should submit the form if there are no errors', async function() {
+    /*
+    const mockOnSubmit = jest.fn();
+    const { getByLabelText, getByRole } = render(<BasicUsageForm onSubmit={mockOnSubmit}/>);
+
+    await act(async () => {
+      fireEvent.change(
+          getByLabelText("Example Required"),
+          { target: { value: "fizzbuzz" }}
+      );
+    });
+
+    await act( async () => {
+      fireEvent.submit(getByRole("button"));
+    });
+
+    expect(mockOnSubmit).toHaveBeenCalled(); // this is failing called 0 times
+
+     */
   });
 });
