@@ -32,4 +32,13 @@ describe("Register Fields Form Inputs", () => {
     const input = screen.getByLabelText("First Name");
     expect(input).toHaveDisplayValue("FizzBuzz");
   });
+
+  test("Should set a select value", () => {
+    render(<RegisterFields/>);
+    fireEvent.change(screen.getByLabelText("Gender"),
+      { target: { value: "male"}
+    });
+    const select = screen.getByLabelText("Gender");
+    expect(select).toHaveDisplayValue("male");
+  });
 });
