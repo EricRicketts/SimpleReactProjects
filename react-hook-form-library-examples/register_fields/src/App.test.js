@@ -12,4 +12,9 @@ describe("Register Fields Initialization", () => {
     render(<RegisterFields/>);
     expect(screen.getByLabelText("First Name")).toBeEmptyDOMElement();
   });
+
+  test("should have placeholder in select input", () => {
+    render(<RegisterFields/>);
+    expect(screen.getByLabelText("Gender")).toHaveDisplayValue("Select Gender");
+  });
 });

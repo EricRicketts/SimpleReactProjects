@@ -28,7 +28,11 @@ const RegisterFields = () => {
         </FormControl>
         <FormControl>
           <FormLabel htmlFor="gender">Gender</FormLabel>
-          <Select placeholder="Select Gender" {...register("gender")}>
+          <Select
+            id="gender"
+            name="gender"
+            placeholder="Select Gender"
+            {...register("gender")}>
             <option value='female'>female</option>
             <option value='male'>male</option>
           </Select>
