@@ -33,7 +33,7 @@ const TwoSimpleInputs = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(registerHandler)} >
+    <form data-testid="form" onSubmit={handleSubmit(registerHandler)} >
       <VStack spacing="24px" align="left">
         <FormControl isInvalid={errors.firstName}>
           <FormLabel htmlFor="firstName">First Name</FormLabel>
