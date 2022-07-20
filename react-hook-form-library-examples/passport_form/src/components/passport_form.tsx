@@ -1,12 +1,12 @@
 import {
   Container
 } from '@chakra-ui/react';
-import Checkboxes from './checkboxes';
+import PassportTypesAndSizes from './passport_types_and_sizes';
 
 const PassportForm = () => {
   return (
     <Container maxW='container.xl'>
-      <Checkboxes />
+      <PassportTypesAndSizes/>
     </Container>
   );
 }
