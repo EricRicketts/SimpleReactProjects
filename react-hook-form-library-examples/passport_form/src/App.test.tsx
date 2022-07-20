@@ -73,7 +73,7 @@ describe('Test Suite for entire Form', () => {
         bothButton = screen.getByLabelText(/Both/) as HTMLInputElement;
         
         expected = [false, true, false] as boolean[];
-        results = [bookButton.checked, cardButton.checked, bothButton.checked];
+        results = [bookButton.checked, cardButton.checked, bothButton.checked] as boolean[];
         
         expect(bookButton).not.toBeChecked();
         expect(cardButton).toBeChecked();
@@ -89,7 +89,7 @@ describe('Test Suite for entire Form', () => {
         bothButton = screen.getByLabelText(/Both/) as HTMLInputElement;
     
         expected = [false, false, true] as boolean[];
-        results = [bookButton.checked, cardButton.checked, bothButton.checked];
+        results = [bookButton.checked, cardButton.checked, bothButton.checked] as boolean[];
     
         expect(bookButton).not.toBeChecked();
         expect(cardButton).not.toBeChecked();
@@ -104,13 +104,50 @@ describe('Test Suite for entire Form', () => {
         bookButton = screen.getByLabelText(/Passport Book/) as HTMLInputElement;
         cardButton = screen.getByLabelText(/Passport Card/) as HTMLInputElement;
         bothButton = screen.getByLabelText(/Both/) as HTMLInputElement;
-    
+  
+        results = [bookButton.checked, cardButton.checked, bothButton.checked] as boolean[];
         expected = [true, false, false] as boolean[];
-        results = [bookButton.checked, cardButton.checked, bothButton.checked];
     
         expect(bookButton).toBeChecked();
         expect(cardButton).not.toBeChecked();
         expect(bothButton).not.toBeChecked();
+        expect(results).toEqual(expected);
+      });
+    });
+    
+    describe('Test selection of passport book sizes', () => {
+     
+      test('should select the large book', async () => {
+        const {user} = setup(<PassportTypesAndSizes/>);
+        [regularButton, largeButton] = [
+          screen.getByLabelText(/Regular Book/) as HTMLInputElement,
+          screen.getByLabelText(/Large Book/) as HTMLInputElement
+        ];
+        await user.click(largeButton);
+        
+        expected = [false,true] as boolean[];
+        results = [regularButton.checked, largeButton.checked] as boolean[];
+        
+        expect(regularButton).not.toBeChecked();
+        expect(largeButton).toBeChecked();
+        expect(results).toEqual(expected);
+      });
+  
+  
+      test('should select the regular book', async () => {
+        const {user} = setup(<PassportTypesAndSizes/>);
+        [regularButton, largeButton] = [
+          screen.getByLabelText(/Regular Book/) as HTMLInputElement,
+          screen.getByLabelText(/Large Book/) as HTMLInputElement
+        ];
+        await user.click(largeButton);
+        await user.click(regularButton);
+    
+        results = [regularButton.checked, largeButton.checked] as boolean[];
+        expected = [true, false] as boolean[];
+    
+        expect(regularButton).toBeChecked();
+        expect(largeButton).not.toBeChecked();
         expect(results).toEqual(expected);
       });
     });
