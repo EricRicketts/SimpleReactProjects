@@ -4,6 +4,9 @@ import userEvent from '@testing-library/user-event'
 import PassportTypesAndSizes from "./components/passport_types_and_sizes";
 
 describe('Test Suite for entire Form', () => {
+  let bookButton, cardButton, bothButton, regularButton, largeButton;
+  let expected, results;
+  
   const setup = (jsx: JSX.Element) => {
     return {
       user: userEvent.setup(),
@@ -12,8 +15,6 @@ describe('Test Suite for entire Form', () => {
   }
   
   describe('Test Passport Types And Sizes', () => {
-    let bookButton, cardButton, bothButton, regularButton, largeButton;
-    let expected, results;
   
     describe('Test Default Values', () => {
   
@@ -59,6 +60,58 @@ describe('Test Suite for entire Form', () => {
       test('should have large book comment present', () => {
         render(<PassportTypesAndSizes/>);
         expect(screen.getByText(/for frequent international travelers/)).toBeInTheDocument();
+      });
+    });
+    
+    describe('Test Selection of Passport Types', () => {
+      
+      test('should select passport card', async () => {
+        const {user} = setup(<PassportTypesAndSizes/>);
+        await user.click(screen.getByLabelText(/Passport Card/));
+        bookButton = screen.getByLabelText(/Passport Book/) as HTMLInputElement;
+        cardButton = screen.getByLabelText(/Passport Card/) as HTMLInputElement;
+        bothButton = screen.getByLabelText(/Both/) as HTMLInputElement;
+        
+        expected = [false, true, false] as boolean[];
+        results = [bookButton.checked, cardButton.checked, bothButton.checked];
+        
+        expect(bookButton).not.toBeChecked();
+        expect(cardButton).toBeChecked();
+        expect(bothButton).not.toBeChecked();
+        expect(results).toEqual(expected);
+      });
+  
+      test('should select both types', async () => {
+        const {user} = setup(<PassportTypesAndSizes/>);
+        await user.click(screen.getByLabelText(/Both/));
+        bookButton = screen.getByLabelText(/Passport Book/) as HTMLInputElement;
+        cardButton = screen.getByLabelText(/Passport Card/) as HTMLInputElement;
+        bothButton = screen.getByLabelText(/Both/) as HTMLInputElement;
+    
+        expected = [false, false, true] as boolean[];
+        results = [bookButton.checked, cardButton.checked, bothButton.checked];
+    
+        expect(bookButton).not.toBeChecked();
+        expect(cardButton).not.toBeChecked();
+        expect(bothButton).toBeChecked();
+        expect(results).toEqual(expected);
+      });
+  
+      test('should select passport book', async () => {
+        const {user} = setup(<PassportTypesAndSizes/>);
+        await user.click(screen.getByLabelText(/Both/));
+        await user.click(screen.getByLabelText(/Passport Book/));
+        bookButton = screen.getByLabelText(/Passport Book/) as HTMLInputElement;
+        cardButton = screen.getByLabelText(/Passport Card/) as HTMLInputElement;
+        bothButton = screen.getByLabelText(/Both/) as HTMLInputElement;
+    
+        expected = [true, false, false] as boolean[];
+        results = [bookButton.checked, cardButton.checked, bothButton.checked];
+    
+        expect(bookButton).toBeChecked();
+        expect(cardButton).not.toBeChecked();
+        expect(bothButton).not.toBeChecked();
+        expect(results).toEqual(expected);
       });
     });
   });
