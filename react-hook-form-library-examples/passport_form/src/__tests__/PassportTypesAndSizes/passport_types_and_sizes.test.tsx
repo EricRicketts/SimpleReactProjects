@@ -1,18 +1,11 @@
 import React from "react"
-import { screen, render, fireEvent } from "@testing-library/react"
-import userEvent from '@testing-library/user-event'
-import PassportTypesAndSizes from "./components/passport_types_and_sizes";
+import { screen, render } from "@testing-library/react"
+import {setup} from '../../javascript/test_helpers';
+import PassportTypesAndSizes from "../../components/passport_types_and_sizes";
 
-describe('Test Suite for entire Form', () => {
+describe('Test Suite for Passport Types and Sizes', () => {
   let bookButton, cardButton, bothButton, regularButton, largeButton;
   let expected, results;
-  
-  const setup = (jsx: JSX.Element) => {
-    return {
-      user: userEvent.setup(),
-      ...render(jsx),
-    }
-  }
   
   describe('Test Passport Types And Sizes', () => {
   
