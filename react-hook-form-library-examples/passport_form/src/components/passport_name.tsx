@@ -11,34 +11,44 @@ import {
   HStack
 } from "@chakra-ui/react";
 
+type FormNameValues = {
+  firstName: string,
+  lastName: string,
+  middleName: string,
+}
 const PassportName = () => {
   const namePattern: RegExp = /^[A-Za-z]+$/i;
-  const { register } = useForm();
+  const { register } = useForm<FormNameValues>({
+      defaultValues: {
+        firstName: '',
+        lastName: '',
+        middleName: ''
+      }
+    }
+  );
   return (
-    <FormControl as='fieldset'>
-      <VStack align='left' spacing={5}>
-        <VStack align='left' spacing={1}>
-          <FormLabel htmlFor='lastName'><strong>1. Name</strong> Last</FormLabel>
-          <Input
-            {...register('lastName', { required: true, pattern: namePattern })}
-          />
-        </VStack>
-        <HStack>
-          <VStack align='left' spacing={1}>
-            <FormLabel htmlFor='firstName'>First</FormLabel>
-            <Input
-              {...register('firstName', { required: true, pattern: namePattern })}
-            />
-          </VStack>
-          <VStack align='left' spacing={1}>
-            <FormLabel htmlFor='middleName'>Middle</FormLabel>
-            <Input
-              {...register('middleName', { required: true, pattern: namePattern })}
-            />
-          </VStack>
-        </HStack>
+    <VStack align='left' spacing={5}>
+      <VStack>
+        <FormControl isRequired >
+          <FormLabel><strong>1. Name</strong> Last</FormLabel>
+          <Input {...register('lastName')}/>
+        </FormControl>
       </VStack>
-    </FormControl>
+      <HStack>
+        <VStack>
+          <FormControl>
+            <FormLabel>First</FormLabel>
+            <Input {...register('firstName')}/>
+          </FormControl>
+        </VStack>
+        <VStack>
+          <FormControl>
+            <FormLabel>Middle</FormLabel>
+            <Input {...register('middleName')}/>
+          </FormControl>
+        </VStack>
+      </HStack>
+    </VStack>
   );
 }
 
