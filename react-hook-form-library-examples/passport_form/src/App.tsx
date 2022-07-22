@@ -9,10 +9,10 @@ import {
   Grid,
   theme,
 } from "@chakra-ui/react"
-import PassportForm from "./components/passport_form";
+import PassportApplicationForm from "./components/passport_application_form";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <PassportForm/>
+    <PassportApplicationForm/>
   </ChakraProvider>
 )
