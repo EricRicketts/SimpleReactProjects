@@ -15,6 +15,7 @@ import {
 
 const PassportApplicationForm = () => {
   const [passportType, setPassportType] = React.useState('book');
+  const [passportSize, setPassportSize] = React.useState('regular');
   const {
     handleSubmit,
     register,
@@ -30,10 +31,13 @@ const PassportApplicationForm = () => {
     if (formState.isSubmitSuccessful) {
       console.log("successful submit");
       reset({
-        passportType: 'book'
+        passportType: 'book',
+        passportSize: 'regular'
       });
       setPassportType('book');
+      setPassportSize('regular')
       console.log(passportType)
+      console.log(passportSize)
     }
   }, [isSubmitSuccessful, reset]);
   return (
@@ -45,6 +49,14 @@ const PassportApplicationForm = () => {
               <Radio {...register('passportType')} value='book'>U.S. Passport Book</Radio>
               <Radio {...register('passportType')} value='card'>U.S. Passport Card</Radio>
               <Radio {...register('passportType')} value='both'>Both</Radio>
+            </HStack>
+          </RadioGroup>
+        </FormControl>
+        <FormControl>
+          <RadioGroup onChange={setPassportSize} value={passportSize}>
+            <HStack spacing={5}>
+              <Radio {...register('passportSize')} value='regular'>Regular Book (Standard)</Radio>
+              <Radio {...register('passportSize')} value='large'>Large Book (Non-Standard)</Radio>
             </HStack>
           </RadioGroup>
         </FormControl>
