@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { FormControl, FormLabel } from "@chakra-ui/react";
 
 interface IFormInput {
   name: string;
@@ -29,7 +30,7 @@ const HandleErrorsExample = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="name">Name</label>
+      <FormLabel htmlFor="name">Name</FormLabel>
       <input
         type="text"
         {...register("name", {
