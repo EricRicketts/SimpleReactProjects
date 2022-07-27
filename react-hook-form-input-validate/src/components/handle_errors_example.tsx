@@ -18,7 +18,8 @@ const HandleErrorsExample = () => {
     formState: { errors },
     register,
   } = useForm<IFormInput>({
-    mode: "onSubmit",
+    // mode: "onSubmit",
+    mode: "onTouched",
     defaultValues: {
       name: "",
     },
