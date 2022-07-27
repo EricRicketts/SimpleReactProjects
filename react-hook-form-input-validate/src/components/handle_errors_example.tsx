@@ -30,22 +30,24 @@ const HandleErrorsExample = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormLabel htmlFor="name">Name</FormLabel>
-      <input
-        type="text"
-        {...register("name", {
-          required: {
-            value: true,
-            message: "name is required",
-          },
-          pattern: {
-            value: nameRegex,
-            message: "name must be one or more letters",
-          },
-        })}
-      />
-      {errors.name?.type === "required" && <p>{errors.name.message}</p>}
-      {errors.name?.type === "pattern" && <p>{errors.name.message}</p>}
+      <FormControl>
+        <FormLabel htmlFor="name">Name</FormLabel>
+        <input
+          type="text"
+          {...register("name", {
+            required: {
+              value: true,
+              message: "name is required",
+            },
+            pattern: {
+              value: nameRegex,
+              message: "name must be one or more letters",
+            },
+          })}
+        />
+        {errors.name?.type === "required" && <p>{errors.name.message}</p>}
+        {errors.name?.type === "pattern" && <p>{errors.name.message}</p>}
+      </FormControl>
       <button type="submit">Submit</button>
     </form>
   );
