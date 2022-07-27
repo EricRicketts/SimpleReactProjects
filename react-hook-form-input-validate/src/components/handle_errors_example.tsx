@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { FormControl, FormLabel } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  FormErrorMessage,
+  Button,
+} from "@chakra-ui/react";
 
 interface IFormInput {
   name: string;
@@ -30,10 +36,11 @@ const HandleErrorsExample = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormControl>
+      <FormControl isInvalid={!!errors.name}>
         <FormLabel htmlFor="name">Name</FormLabel>
-        <input
-          type="text"
+        <Input
+          id="name"
+          placeholder="Name"
           {...register("name", {
             required: {
               value: true,
@@ -45,10 +52,13 @@ const HandleErrorsExample = () => {
             },
           })}
         />
-        {errors.name?.type === "required" && <p>{errors.name.message}</p>}
-        {errors.name?.type === "pattern" && <p>{errors.name.message}</p>}
+        <FormErrorMessage>
+          {errors.name && errors.name.message}
+        </FormErrorMessage>
       </FormControl>
-      <button type="submit">Submit</button>
+      <Button mt={4} color="teal" type="submit">
+        Submit
+      </Button>
     </form>
   );
 };
