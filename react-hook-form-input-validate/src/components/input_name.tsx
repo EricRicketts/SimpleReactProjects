@@ -1,74 +1,66 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import {
   FormControl,
-  FormErrorMessage,
-  FormHelperText,
   FormLabel,
   Input,
+  FormErrorMessage,
   Button,
-  VStack,
 } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
+
+interface IFormInput {
+  name: string;
+}
 
 const InputName = () => {
-  const nameRegex = /^[A-Za-z]+$/;
   const {
-    getValues,
-    register,
-    formState,
-    formState: { errors },
     handleSubmit,
-  } = useForm({
+    formState: { errors },
+    register,
+  } = useForm<IFormInput>({
+    // mode: "onSubmit",
     mode: "onTouched",
     defaultValues: {
-      lastName: "",
+      name: "",
     },
   });
 
-  const onChangeUpdate = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const values = getValues("lastName");
-    console.log("getValues in onChange: " + values);
-  };
+  const nameRegex = /^[A-Za-z]+$/;
+  useEffect(() => {
+    console.log("error object: ", errors);
+  }, [errors]);
 
-  const onBlurUpdate = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const values = getValues("lastName");
-    console.log(errors);
-    console.log("getValues in onBlur: " + values);
-  };
-
-  const onSubmit = (data: any) => {
-    console.log(data);
-    console.log(formState.errors);
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    const dataOutput: string = JSON.stringify(data, null, 4);
+    console.log("All form input: " + dataOutput);
   };
 
   return (
-    <VStack align="left">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl>
-          <VStack marginLeft="5px" align="left">
-            <FormLabel>Last Name</FormLabel>
-            <Input
-              {...register("lastName", {
-                onChange: onChangeUpdate,
-                onBlur: onBlurUpdate,
-                required: {
-                  value: true,
-                  message: "Last name is required",
-                },
-                pattern: {
-                  value: nameRegex,
-                  message: "Last name must be at least one letter",
-                },
-              })}
-            />
-            {errors.lastName?.type === "required" && (
-              <FormErrorMessage>{errors.lastName.message}</FormErrorMessage>
-            )}
-            <Button type="submit">Submit</Button>
-          </VStack>
-        </FormControl>
-      </form>
-    </VStack>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <FormControl isInvalid={!!errors.name}>
+        <FormLabel htmlFor="name">Name</FormLabel>
+        <Input
+          id="name"
+          placeholder="Name"
+          {...register("name", {
+            required: {
+              value: true,
+              message: "name is required",
+            },
+            pattern: {
+              value: nameRegex,
+              message: "name must be one or more letters",
+            },
+          })}
+        />
+        <FormErrorMessage>
+          {errors.name && errors.name.message}
+        </FormErrorMessage>
+      </FormControl>
+      <Button mt={4} color="teal" type="submit">
+        Submit
+      </Button>
+    </form>
   );
 };
 
