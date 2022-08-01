@@ -17,7 +17,7 @@ const PassportApplication = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <VStack marginLeft="10px" align="left">
-        <InputNameTemplate id={"firstName"} label={"First Name"} register={register} errors={errors} />
+        <InputNameTemplate id={"lastName"} label={"Last Name"} register={register} errors={errors} />
         <Button mt={4} color="teal" type="submit">
           Submit
         </Button>

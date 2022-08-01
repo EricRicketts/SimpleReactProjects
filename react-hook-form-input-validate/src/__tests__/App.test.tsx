@@ -24,8 +24,21 @@ describe("Test Suite", () => {
   });
   */
   describe("Test Initial Values,", () => {
+    let user;
+    beforeEach(() => {
+      user = userEvent.setup();
+      render(<App/>);
+    });
+
+    describe("Test Initial Name Values", function () {
+
+    });
     test("should render the last name input", () => {
-      expect(1).toBe(1);
+      expect(screen.getByLabelText(/Last Name/)).toBeInTheDocument();
+    });
+
+    test("should have empty string for last name to begin with", () => {
+      expect(screen.getByLabelText(/Last Name/)).toBeEmptyDOMElement();
     });
   });
 
