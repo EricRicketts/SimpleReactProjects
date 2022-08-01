@@ -1,49 +1,28 @@
 import React from "react";
-import { ControlledTextInput, FormValues } from "./controlled_text_input";
-import { useForm, handleSubmit } from "react-hook-form";
+import { InputNameTemplate, IFormValues } from "./input_name_template";
+import { useForm } from "react-hook-form";
 import {
   VStack,
-  HStack,
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
   Button,
 } from "@chakra-ui/react";
 
-const PassportApplicaton = () => {
-  const nameRegex: RegExp = /^[A-Za-z]+$/;
-  const nameErrorMessage: string =
-    "Name can only be letters and must be at least one letter";
-  const { handleSubmit, control } = useForm<FormValues>({
+const PassportApplication = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm<IFormValues>({ mode: "onTouched",
     defaultValues: {
-      lastName: "",
-    },
-    mode: "onSubmit",
+      "firstName": ''
+    }
   });
 
-  const onSubmit = (data: any) => console.log(data);
-
+  const onSubmit = (data: IFormValues) => console.log(data);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <ControlledTextInput
-        control={control}
-        name="lastName"
-        rules={{
-          required: {
-            value: true,
-            message: "Last Name is required",
-          },
-          pattern: {
-            value: nameRegex,
-            message: nameErrorMessage,
-          },
-        }}
-      />
-      <Button mt={4} color="teal" type="submit">
-        Submit
-      </Button>
+      <VStack marginLeft="10px" align="left">
+        <InputNameTemplate id={"firstName"} label={"First Name"} register={register} errors={errors} />
+        <Button mt={4} color="teal" type="submit">
+          Submit
+        </Button>
+      </VStack>
     </form>
   );
-};
-
-export { PassportApplicaton };
+}
+export default PassportApplication;

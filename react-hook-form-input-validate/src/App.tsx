@@ -1,12 +1,12 @@
 import * as React from "react";
 import { Text, VStack, ChakraProvider } from "@chakra-ui/react";
-import InputName from "./components/input_name";
+import PassportApplication from "./components/passport_application";
 
 export const App = () => {
   return (
     <ChakraProvider>
-      <VStack marginLeft={5} align="left">
-        <InputName />
+      <VStack align="left">
+        <PassportApplication />
       </VStack>
     </ChakraProvider>
   );
