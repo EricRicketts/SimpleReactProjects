@@ -3,7 +3,6 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { render } from "../test-utils";
 import { App } from "../App";
-import { useRadio } from "@chakra-ui/react";
 
 describe("Test Suite", () => {
   /*
@@ -24,27 +23,47 @@ describe("Test Suite", () => {
   });
   */
   describe("Test Initial Values,", () => {
-    let user;
-    beforeEach(() => {
-      user = userEvent.setup();
-      render(<App/>);
-    });
-
-    describe("Test Initial Name Values", function () {
-
-    });
+    describe("Test Initial Name Values", function () {});
     test("should render the last name input", () => {
+      render(<App />);
       expect(screen.getByLabelText(/Last Name/)).toBeInTheDocument();
     });
 
     test("should have empty string for last name to begin with", () => {
+      render(<App />);
       expect(screen.getByLabelText(/Last Name/)).toBeEmptyDOMElement();
     });
   });
 
   describe("Test All Name Inputs", () => {
     test("should require the last name", async () => {
-      expect(2).toBe(2);
+      const user = userEvent.setup();
+      render(<App />);
+      expect(document.body).toHaveFocus();
+      await user.tab();
+      expect(screen.getByLabelText(/Last Name/)).toHaveFocus();
+      await user.tab();
+      expect(screen.getByText(/Last Name is required/)).toBeInTheDocument();
+    });
+
+    test("should require at least two letters", async () => {
+      const user = userEvent.setup();
+      render(<App />);
+      const lastNameInput = screen.getByLabelText(/Last Name/);
+      await user.type(lastNameInput, "F");
+      expect(lastNameInput).toHaveValue("F");
+      await user.tab();
+      expect(screen.getByText(/and at least two letters/)).toBeInTheDocument();
+    });
+
+    test("should only allow letters", async () => {
+      const user = userEvent.setup();
+      render(<App />);
+      const lastNameInput = screen.getByLabelText(/Last Name/);
+      await user.type(lastNameInput, "Foo1Bar");
+      expect(lastNameInput).toHaveValue("Foo1Bar");
+      await user.tab();
+      expect(screen.getByText(/must be only letters/)).toBeInTheDocument();
     });
   });
 });
